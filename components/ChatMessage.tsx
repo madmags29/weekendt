@@ -152,21 +152,21 @@ export default function ChatMessage({ role, content, data }: ChatMessageProps) {
                             </div>
                         )}
 
-                        {/* City Detail Info (Destination Preferred) */}
-                        {(data.destination_info || data.origin_info) && (
+                        {/* City Detail Info (Destination Only) */}
+                        {data.destination_info && (
                             <div className="p-6 bg-zinc-950/30 border-t border-white/5">
                                 <p className="text-xs font-bold text-zinc-500 uppercase tracking-widest mb-3">
-                                    About {data.destination_info ? data.destination_info.city_name : data.origin_info!.city_name}
+                                    About {data.destination_info.city_name}
                                 </p>
                                 <p className="text-xs text-zinc-400 leading-relaxed mb-4">
-                                    {data.destination_info ? data.destination_info.description : data.origin_info!.description}
+                                    {data.destination_info.description}
                                 </p>
 
-                                {(data.destination_info || data.origin_info!).top_attractions && (data.destination_info || data.origin_info!).top_attractions!.length > 0 && (
+                                {data.destination_info.top_attractions && data.destination_info.top_attractions.length > 0 && (
                                     <div className="mb-4">
                                         <p className="text-xs font-semibold text-zinc-300 mb-2">Top Attractions:</p>
                                         <div className="grid gap-2">
-                                            {(data.destination_info || data.origin_info!).top_attractions!.map((attr, idx) => (
+                                            {data.destination_info.top_attractions.map((attr, idx) => (
                                                 <div key={idx} className="bg-white/5 p-3 rounded-lg border border-white/5">
                                                     <h5 className="text-xs font-bold text-zinc-200 mb-1">{attr.name}</h5>
                                                     <p className="text-xs text-zinc-400 leading-relaxed">{attr.description}</p>
