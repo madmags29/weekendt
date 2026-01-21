@@ -169,15 +169,15 @@ export default function LandingPage({ onSearch }: LandingPageProps) {
             <div className="relative z-10 flex flex-col items-center justify-center h-full px-4 text-center">
 
                 {/* Hero Text */}
-                <h1 className="text-5xl md:text-7xl font-bold tracking-tight mb-2 drop-shadow-2xl bg-clip-text text-transparent bg-gradient-to-b from-white to-white/70">
+                <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold tracking-tight mb-2 drop-shadow-2xl bg-clip-text text-transparent bg-gradient-to-b from-white to-white/70 px-2">
                     Weekend Traveller
                 </h1>
-                <p className="text-lg md:text-xl text-zinc-100 mb-12 font-light tracking-wide drop-shadow-md">
+                <p className="text-base sm:text-lg md:text-xl text-zinc-100 mb-8 md:mb-12 font-light tracking-wide drop-shadow-md px-4">
                     Discover India's hidden gems with AI.
                 </p>
 
                 {/* Search Bar */}
-                <form onSubmit={handleSearch} className="w-full max-w-2xl mb-16 group relative">
+                <form onSubmit={handleSearch} className="w-full max-w-2xl mb-12 md:mb-16 group relative px-4">
                     <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 to-indigo-600 rounded-full opacity-30 group-hover:opacity-60 transition duration-500 blur-lg"></div>
                     <div className="relative flex items-center bg-white/10 backdrop-blur-xl border border-white/20 rounded-full p-2 transition-all group-focus-within:bg-black/40 group-focus-within:border-white/40 shadow-2xl">
                         <Search className="w-6 h-6 text-zinc-300 ml-4" />

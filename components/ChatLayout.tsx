@@ -215,13 +215,13 @@ export default function ChatLayout({ initialQuery, initialTripId, onBack }: Chat
         <div className="flex h-screen bg-black overflow-hidden font-sans aurora-bg selection:bg-purple-500/30">
             {/* LEFT PANEL - CHAT */}
             <div
-                style={{ width: `${sidebarWidth}px` }}
-                className="flex flex-col glass-panel border-r-0 relative z-10 shadow-2xl backdrop-blur-3xl transition-[width] duration-0 ease-linear shrink-0"
+                style={{ "--sidebar-width": `${sidebarWidth}px` } as React.CSSProperties}
+                className="flex flex-col glass-panel border-r-0 relative z-10 shadow-2xl backdrop-blur-3xl transition-[width] duration-0 ease-linear shrink-0 w-full md:w-[var(--sidebar-width)]"
             >
                 {/* Drag Handle */}
                 <div
                     onMouseDown={(e) => { e.preventDefault(); setIsResizing(true); }}
-                    className="absolute -right-1 top-0 bottom-0 w-2 cursor-col-resize z-50 hover:bg-purple-500/50 transition-colors group flex items-center justify-center translate-x-1/2"
+                    className="absolute -right-1 top-0 bottom-0 w-2 cursor-col-resize z-50 hover:bg-purple-500/50 transition-colors group hidden md:flex items-center justify-center translate-x-1/2"
                 >
                     <div className="w-0.5 h-8 bg-zinc-600 rounded-full group-hover:bg-white transition-colors" />
                 </div>
