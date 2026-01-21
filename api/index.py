@@ -79,5 +79,7 @@ def health_check():
 def read_root():
     return {"message": "Weekend Traveller API"}
 
-# Vercel serverless handler
-handler = app
+from mangum import Mangum
+
+# Vercel serverless handler (wrapped for Lambda compatibility)
+handler = Mangum(app)
