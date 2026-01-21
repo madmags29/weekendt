@@ -152,42 +152,24 @@ export default function ChatMessage({ role, content, data }: ChatMessageProps) {
                             </div>
                         )}
 
-                        {/* Origin City Info */}
-                        {data.origin_info && (
+                        {/* City Detail Info (Destination Preferred) */}
+                        {(data.destination_info || data.origin_info) && (
                             <div className="p-6 bg-zinc-950/30 border-t border-white/5">
-                                <p className="text-xs font-bold text-zinc-500 uppercase tracking-widest mb-3">About {data.origin_info.city_name}</p>
-                                <p className="text-xs text-zinc-400 leading-relaxed mb-4">{data.origin_info.description}</p>
+                                <p className="text-xs font-bold text-zinc-500 uppercase tracking-widest mb-3">
+                                    About {data.destination_info ? data.destination_info.city_name : data.origin_info!.city_name}
+                                </p>
+                                <p className="text-xs text-zinc-400 leading-relaxed mb-4">
+                                    {data.destination_info ? data.destination_info.description : data.origin_info!.description}
+                                </p>
 
-                                {data.origin_info.top_attractions && data.origin_info.top_attractions.length > 0 && (
+                                {(data.destination_info || data.origin_info!).top_attractions && (data.destination_info || data.origin_info!).top_attractions!.length > 0 && (
                                     <div className="mb-4">
                                         <p className="text-xs font-semibold text-zinc-300 mb-2">Top Attractions:</p>
                                         <div className="grid gap-2">
-                                            {data.origin_info.top_attractions.map((attr, idx) => (
+                                            {(data.destination_info || data.origin_info!).top_attractions!.map((attr, idx) => (
                                                 <div key={idx} className="bg-white/5 p-3 rounded-lg border border-white/5">
                                                     <h5 className="text-xs font-bold text-zinc-200 mb-1">{attr.name}</h5>
                                                     <p className="text-xs text-zinc-400 leading-relaxed">{attr.description}</p>
-                                                </div>
-                                            ))}
-                                        </div>
-                                    </div>
-                                )}
-
-                                {data.origin_info.hotels && data.origin_info.hotels.length > 0 && (
-                                    <div>
-                                        <p className="text-xs font-semibold text-zinc-300 mb-2">Hotels in {data.origin_info.city_name}:</p>
-                                        <div className="grid gap-2">
-                                            {data.origin_info.hotels.map((hotel, idx) => (
-                                                <div key={idx} className="bg-white/5 p-3 rounded-lg border border-white/5">
-                                                    <div className="flex items-start justify-between mb-1">
-                                                        <h5 className="text-xs font-bold text-zinc-200">{hotel.name}</h5>
-                                                        <span className={clsx(
-                                                            "text-[10px] px-1.5 py-0.5 rounded-full font-medium",
-                                                            hotel.price_range === "Budget" && "bg-green-500/20 text-green-300",
-                                                            hotel.price_range === "Mid-Range" && "bg-blue-500/20 text-blue-300",
-                                                            hotel.price_range === "Luxury" && "bg-purple-500/20 text-purple-300"
-                                                        )}>{hotel.price_range}</span>
-                                                    </div>
-                                                    <p className="text-xs text-zinc-400 leading-relaxed">{hotel.description}</p>
                                                 </div>
                                             ))}
                                         </div>

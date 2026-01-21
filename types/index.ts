@@ -57,6 +57,7 @@ export interface TripPlan {
     route_info: RouteInfo;
     itinerary: DayPlan[];
     hotels?: Hotel[];
+    destination_info?: OriginInfo; // Reuse OriginInfo structure for destination
     origin_info?: OriginInfo;
     hero_image?: string;
     hero_video?: string;
