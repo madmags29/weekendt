@@ -19,6 +19,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# Mount api router
+app.include_router(search.router, prefix="/api")
+
+# Also mount without prefix for local testing or direct lambda invocation
 app.include_router(search.router)
 
 @app.get("/")
