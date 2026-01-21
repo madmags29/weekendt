@@ -19,6 +19,7 @@ export default function LandingPage({ onSearch }: LandingPageProps) {
     const [videoData, setVideoData] = useState<{ url: string, credit: string, source: string } | null>(null);
     const [query, setQuery] = useState("");
     const [loaded, setLoaded] = useState(false);
+    const [debugInfo, setDebugInfo] = useState<string>("");
 
     // Dynamic Recommendations State
     const [destinations, setDestinations] = useState(DESTINATIONS);
@@ -31,20 +32,24 @@ export default function LandingPage({ onSearch }: LandingPageProps) {
         const API_URL = process.env.NEXT_PUBLIC_API_URL || '/api';
 
         // 1. Fetch background videos
+        setDebugInfo(`Fetching from: ${API_URL}`);
         fetch(`${API_URL}/background-videos`)
-            .then(res => res.json())
+            .then(res => {
+                if (!res.ok) throw new Error(`Status ${res.status}`);
+                return res.json();
+            })
             .then(videos => {
                 if (videos && videos.length > 0) {
                     const randomVideo = videos[Math.floor(Math.random() * videos.length)];
-                    // Handle both string (legacy/fallback) and object formats
                     if (typeof randomVideo === 'string') {
                         setVideoData({ url: randomVideo, credit: "", source: "" });
                     } else {
                         setVideoData(randomVideo);
                     }
+                    setDebugInfo(prev => prev + " | Video OK");
                 }
             })
-            .catch(err => console.error("Failed to fetch background video", err));
+            .catch(err => setDebugInfo(prev => prev + ` | Video Error: ${err.message}`));
 
         // 2. Fetch User Location & Recommendations
         if (navigator.geolocation) {
@@ -220,6 +225,10 @@ export default function LandingPage({ onSearch }: LandingPageProps) {
                         ))}
                     </div>
                 )}
+            </div>
+            {/* Debug Overlay */}
+            <div className="absolute top-2 left-2 z-50 bg-black/80 text-green-400 text-xs p-2 rounded pointer-events-none font-mono">
+                DEBUG: {debugInfo}
             </div>
         </div>
     );
