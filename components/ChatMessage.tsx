@@ -10,9 +10,10 @@ interface ChatMessageProps {
     role: "user" | "ai";
     content: string;
     data?: TripPlan;
+    onSave?: (plan: TripPlan) => void;
 }
 
-export default function ChatMessage({ role, content, data }: ChatMessageProps) {
+export default function ChatMessage({ role, content, data, onSave }: ChatMessageProps) {
     const isAi = role === "ai";
     const [expanded, setExpanded] = useState(true); // Start expanded by default
 

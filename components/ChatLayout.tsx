@@ -25,10 +25,11 @@ interface Message {
 
 interface ChatLayoutProps {
     initialQuery?: string;
+    initialTripId?: string;
     onBack?: () => void;
 }
 
-export default function ChatLayout({ initialQuery, onBack }: ChatLayoutProps) {
+export default function ChatLayout({ initialQuery, initialTripId, onBack }: ChatLayoutProps) {
     const [messages, setMessages] = useState<Message[]>([
         {
             role: "ai",
@@ -111,6 +112,28 @@ export default function ChatLayout({ initialQuery, onBack }: ChatLayoutProps) {
         }
     }, [initialQuery]);
 
+    // Load saved trip if ID provided
+    useEffect(() => {
+        if (initialTripId) {
+            try {
+                const stored = localStorage.getItem("weekend_trips_history");
+                if (stored) {
+                    const trips = JSON.parse(stored);
+                    const trip = trips.find((t: any) => t.id === initialTripId);
+                    if (trip) {
+                        setCurrentPlan(trip.plan);
+                        setMessages([
+                            { role: 'ai', content: `Welcome back! Opening your saved trip to ${trip.plan.destination}...` },
+                            { role: 'ai', content: `Here is your plan for ${trip.plan.destination}!`, data: trip.plan }
+                        ]);
+                    }
+                }
+            } catch (e) {
+                console.error("Failed to load saved trip", e);
+            }
+        }
+    }, [initialTripId]);
+
     const processSearch = async (query: string) => {
         try {
             const request: SearchRequest = {
@@ -129,6 +152,9 @@ export default function ChatLayout({ initialQuery, onBack }: ChatLayoutProps) {
 
             const data: TripPlan = await response.json();
             setCurrentPlan(data);
+
+            // Auto-save REMOVED. Now manual via button.
+
             setMessages((prev) => [
                 ...prev,
                 {
@@ -145,6 +171,27 @@ export default function ChatLayout({ initialQuery, onBack }: ChatLayoutProps) {
             ]);
         } finally {
             setLoading(false);
+        }
+    };
+
+    const handleSaveTrip = (plan: TripPlan) => {
+        try {
+            const tripId = Date.now().toString();
+            const newTrip = {
+                id: tripId,
+                plan: plan,
+                date: new Date().toISOString()
+            };
+
+            const existing = localStorage.getItem("weekend_trips_history");
+            const history = existing ? JSON.parse(existing) : [];
+            const updated = [newTrip, ...history].slice(0, 50);
+            localStorage.setItem("weekend_trips_history", JSON.stringify(updated));
+
+            // Optional feedback? Could toast here if we had one.
+            alert("Trip saved to My Trips!");
+        } catch (e) {
+            console.error("Failed to save trip", e);
         }
     };
 
@@ -205,7 +252,7 @@ export default function ChatLayout({ initialQuery, onBack }: ChatLayoutProps) {
                     <div className="space-y-8">
                         {messages.map((msg, idx) => (
                             <div key={idx} id={`msg-${idx}`}>
-                                <ChatMessage {...msg} />
+                                <ChatMessage {...msg} onSave={msg.role === 'ai' && msg.data ? handleSaveTrip : undefined} />
                             </div>
                         ))}
 

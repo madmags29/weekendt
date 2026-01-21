@@ -1,12 +1,21 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 import ChatLayout from "../components/ChatLayout";
 import LandingPage from "../components/LandingPage";
 
-export default function Home() {
+function HomeContent() {
   const [view, setView] = useState<'landing' | 'chat'>('landing');
   const [initialQuery, setInitialQuery] = useState("");
+  const searchParams = useSearchParams();
+  const tripId = searchParams.get('tripId');
+
+  useEffect(() => {
+    if (tripId) {
+      setView('chat');
+    }
+  }, [tripId]);
 
   const handleSearch = (query: string) => {
     setInitialQuery(query);
@@ -14,6 +23,8 @@ export default function Home() {
   };
 
   const handleBack = () => {
+    // Remove query param without reload
+    window.history.replaceState(null, '', '/');
     setView('landing');
     setInitialQuery("");
   };
@@ -22,6 +33,14 @@ export default function Home() {
     return <LandingPage onSearch={handleSearch} />;
   }
 
-  return <ChatLayout initialQuery={initialQuery} onBack={handleBack} />;
+  // Pass tripId to ChatLayout
+  return <ChatLayout initialQuery={initialQuery} initialTripId={tripId || undefined} onBack={handleBack} />;
 }
 
+export default function Home() {
+  return (
+    <Suspense fallback={<div className="h-screen bg-black text-white flex items-center justify-center">Loading...</div>}>
+      <HomeContent />
+    </Suspense>
+  );
+}

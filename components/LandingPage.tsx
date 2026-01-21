@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Link from "next/link";
 import { Search, MapPin, ArrowRight, Menu, X, Home, History, Settings, Info } from "lucide-react";
 
 interface LandingPageProps {
@@ -136,18 +137,18 @@ export default function LandingPage({ onSearch }: LandingPageProps) {
                             <Home className="w-5 h-5" />
                             Home
                         </button>
-                        <button className="flex items-center gap-3 w-full p-3 rounded-lg hover:bg-white/5 text-zinc-400 hover:text-white transition-colors">
+                        <Link href="/my-trips" className="flex items-center gap-3 w-full p-3 rounded-lg hover:bg-white/5 text-zinc-400 hover:text-white transition-colors">
                             <History className="w-5 h-5" />
                             My Trips
-                        </button>
+                        </Link>
                         <button className="flex items-center gap-3 w-full p-3 rounded-lg hover:bg-white/5 text-zinc-400 hover:text-white transition-colors">
                             <Settings className="w-5 h-5" />
                             Settings
                         </button>
-                        <button className="flex items-center gap-3 w-full p-3 rounded-lg hover:bg-white/5 text-zinc-400 hover:text-white transition-colors">
+                        <Link href="/about" className="flex items-center gap-3 w-full p-3 rounded-lg hover:bg-white/5 text-zinc-400 hover:text-white transition-colors">
                             <Info className="w-5 h-5" />
                             About
-                        </button>
+                        </Link>
                     </nav>
 
                     <div className="mt-auto pt-6 border-t border-white/5">
