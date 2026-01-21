@@ -1,81 +1,36 @@
-# Weekend Traveller - Vercel Deployment
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-## Quick Deploy to Vercel
+## Getting Started
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/madmags29/weekendt)
+First, run the development server:
 
-## Environment Variables Required
-
-Add these in Vercel Dashboard → Settings → Environment Variables:
-
-```
-OPENAI_API_KEY=your_openai_api_key
-PIXABAY_API_KEY=your_pixabay_api_key
-PEXELS_API_KEY=your_pexels_api_key
-UNSPLASH_ACCESS_KEY=your_unsplash_access_key
-```
-
-## Deployment Steps
-
-1. **Fork/Clone this repository**
-
-2. **Import to Vercel**:
-   - Go to [vercel.com](https://vercel.com)
-   - Click "Add New Project"
-   - Import your repository
-   - Vercel will auto-detect Next.js
-
-3. **Add Environment Variables**:
-   - In Vercel dashboard, go to Settings → Environment Variables
-   - Add all 4 API keys listed above
-
-4. **Deploy**:
-   - Click "Deploy"
-   - Vercel will build and deploy both frontend and backend
-
-## Architecture
-
-- **Frontend**: Next.js 14 (deployed to Vercel Edge)
-- **Backend**: FastAPI (deployed as Vercel Serverless Functions)
-- **API Route**: `/api/*` routes to Python backend
-- **Frontend**: All other routes serve Next.js app
-
-## Local Development
-
-### Frontend
 ```bash
-cd frontend
-npm install
 npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
 ```
 
-### Backend
-```bash
-cd backend
-python -m venv venv
-source venv/bin/activate
-pip install -r requirements.txt
-uvicorn app.main:app --reload
-```
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-## Features
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-- 🤖 AI-powered trip planning with OpenAI
-- 🗺️ Interactive maps with Leaflet
-- 📸 Rich media from Pexels, Unsplash, Pixabay
-- 🏨 Hotel recommendations with price ranges
-- 📝 400+ character activity descriptions
-- 🌆 Origin city information
-- 🎨 Beautiful glassmorphic UI
+This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-## Tech Stack
+## Learn More
 
-- **Frontend**: Next.js, React, TypeScript, Tailwind CSS
-- **Backend**: FastAPI, Python
-- **APIs**: OpenAI, Pexels, Unsplash, Pixabay
-- **Maps**: Leaflet, OpenStreetMap
-- **Deployment**: Vercel
+To learn more about Next.js, take a look at the following resources:
 
-## License
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-MIT
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+
+## Deploy on Vercel
+
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
