@@ -53,6 +53,10 @@ async def generate_trip_plan(request: SearchRequest) -> TripPlan:
 
     print(f"DEBUG: Generating plan for {request.destination}...")
     try:
+        client = get_ai_client()
+        if not client:
+             raise Exception("OpenAI API Key not configured")
+
         completion = await client.beta.chat.completions.parse(
             model="gpt-4o-2024-08-06",
             messages=[
@@ -144,6 +148,10 @@ async def get_recommendations(lat: float, lng: float) -> RecommendationResponse:
     """
     
     try:
+        client = get_ai_client()
+        if not client:
+             return RecommendationResponse(destinations=[])
+
         completion = await client.beta.chat.completions.parse(
             model="gpt-4o-2024-08-06",
             messages=[
