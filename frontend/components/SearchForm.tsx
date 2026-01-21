@@ -19,6 +19,7 @@ export default function SearchForm({ onSearch, isLoading }: SearchFormProps) {
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         onSearch({
+            query: destination || `Trip from ${origin}`,
             origin,
             destination: destination || undefined,
             budget: budget || undefined,
@@ -108,8 +109,8 @@ export default function SearchForm({ onSearch, isLoading }: SearchFormProps) {
                                     type="button"
                                     onClick={() => setTravelMode("flight")}
                                     className={`flex-1 flex items-center justify-center py-2 rounded-lg transition-all ${travelMode === "flight"
-                                            ? "bg-blue-600 text-white shadow-lg"
-                                            : "text-gray-400 hover:text-white"
+                                        ? "bg-blue-600 text-white shadow-lg"
+                                        : "text-gray-400 hover:text-white"
                                         }`}
                                 >
                                     <Plane className="w-5 h-5" />
@@ -118,8 +119,8 @@ export default function SearchForm({ onSearch, isLoading }: SearchFormProps) {
                                     type="button"
                                     onClick={() => setTravelMode("drive")}
                                     className={`flex-1 flex items-center justify-center py-2 rounded-lg transition-all ${travelMode === "drive"
-                                            ? "bg-blue-600 text-white shadow-lg"
-                                            : "text-gray-400 hover:text-white"
+                                        ? "bg-blue-600 text-white shadow-lg"
+                                        : "text-gray-400 hover:text-white"
                                         }`}
                                 >
                                     <Car className="w-5 h-5" />
@@ -128,8 +129,8 @@ export default function SearchForm({ onSearch, isLoading }: SearchFormProps) {
                                     type="button"
                                     onClick={() => setTravelMode("train")}
                                     className={`flex-1 flex items-center justify-center py-2 rounded-lg transition-all ${travelMode === "train"
-                                            ? "bg-blue-600 text-white shadow-lg"
-                                            : "text-gray-400 hover:text-white"
+                                        ? "bg-blue-600 text-white shadow-lg"
+                                        : "text-gray-400 hover:text-white"
                                         }`}
                                 >
                                     <Train className="w-5 h-5" />
