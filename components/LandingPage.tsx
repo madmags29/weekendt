@@ -28,7 +28,7 @@ export default function LandingPage({ onSearch }: LandingPageProps) {
     const [showMenu, setShowMenu] = useState(false);
 
     useEffect(() => {
-        const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+        const API_URL = process.env.NEXT_PUBLIC_API_URL || '/api';
 
         // 1. Fetch background videos
         fetch(`${API_URL}/background-videos`)

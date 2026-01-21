@@ -105,7 +105,7 @@ export default function ChatLayout({ initialQuery, onBack }: ChatLayoutProps) {
                 days: 2,
             };
 
-            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/search`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || '/api'}/search`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(request),
