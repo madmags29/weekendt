@@ -1,6 +1,12 @@
+import sys
+import os
+
+# Add the current directory to sys.path to allow imports from local files
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from app.routes import search
+from app.routers import search
 
 app = FastAPI()
 
