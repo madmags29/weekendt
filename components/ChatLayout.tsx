@@ -76,9 +76,23 @@ export default function ChatLayout({ initialQuery, onBack }: ChatLayoutProps) {
         };
     }, [isResizing]);
 
-    // Auto-scroll to bottom
+    // Auto-scroll logic
     useEffect(() => {
-        messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+        if (loading) {
+            messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+            return;
+        }
+
+        const lastIdx = messages.length - 1;
+        const lastMessage = messages[lastIdx];
+
+        if (lastMessage && lastMessage.role === "ai" && lastMessage.data) {
+            // Scroll to the TOP of the trip plan
+            document.getElementById(`msg-${lastIdx}`)?.scrollIntoView({ behavior: "smooth", block: "start" });
+        } else {
+            // Default: Scroll to bottom
+            messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+        }
     }, [messages, loading]);
 
     // Process initial query if provided
@@ -190,7 +204,9 @@ export default function ChatLayout({ initialQuery, onBack }: ChatLayoutProps) {
                 <div className="flex-1 overflow-y-auto px-4 py-6 scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent">
                     <div className="space-y-8">
                         {messages.map((msg, idx) => (
-                            <ChatMessage key={idx} {...msg} />
+                            <div key={idx} id={`msg-${idx}`}>
+                                <ChatMessage {...msg} />
+                            </div>
                         ))}
 
                         {loading && (
