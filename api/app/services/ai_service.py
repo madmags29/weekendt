@@ -37,16 +37,16 @@ async def generate_trip_plan(request: SearchRequest) -> TripPlan:
     1. For each 'Sightseeing' activity, provide a `description` that is AT LEAST 400 characters long (approx 5-6 sentences), offering rich historical, cultural, and practical context.
     2. For each activity, include a `nearby_attractions` list with 2-3 other interesting places within walking distance.
     3. Provide a `hotels` list with 3-4 recommended hotels at the DESTINATION, each with name, description, price_range (Budget/Mid-Range/Luxury), and GPS coordinates.
-    4. Provide `origin_info` with details about the ORIGIN city including:
-       - A 400+ character description of the origin city
-       - `top_attractions`: 3-4 must-visit places in the origin city with descriptions (200+ chars each) and coordinates
-       - `hotels`: 2-3 recommended hotels in the origin city with the same format as destination hotels
+    4. Provide `destination_info` with details about the DESTINATION city including:
+       - A 400+ character description of the destination city
+       - `top_attractions`: 3-4 must-visit places in the destination (independent of itinerary) with descriptions and coordinates
+       - `hotels`: (You can duplicate the destination hotels here or provide additional ones)
     5. You MUST provide valid GPS coordinates (lat/lng) for:
        - The main destination
        - The ORIGIN city (as 'origin_coordinates')
        - EVERY sightseeing activity
-       - EVERY hotel (both destination and origin)
-       - EVERY attraction in origin_info
+       - EVERY hotel
+       - EVERY attraction in destination_info
     
     Ensure the response is strictly in the simplified JSON format required.
     """
@@ -124,16 +124,16 @@ async def generate_trip_plan(request: SearchRequest) -> TripPlan:
                 if not activity.image_url:
                      activity.image_url = "https://images.pexels.com/photos/2387873/pexels-photo-2387873.jpeg?auto=compress&cs=tinysrgb&w=400"
 
-        # Fetch Origin City Image
-        if trip_plan.origin_coordinates:
+        # Fetch Destination Info Image (was origin)
+        if trip_plan.destination_info:
             try:
-                origin_city = request.origin or "Delhi"
-                origin_images = await fetch_destination_images(f"{origin_city} india travel landmarks", per_page=1)
-                if origin_images and trip_plan.origin_info:
-                    trip_plan.origin_info.image_url = origin_images[0]["url"]
-                    trip_plan.origin_info.media_credit = f"Photo by {origin_images[0]['credit']}"
+                dest_query = f"{trip_plan.destination} india travel landmarks"
+                dest_images = await fetch_destination_images(dest_query, per_page=1)
+                if dest_images:
+                    trip_plan.destination_info.image_url = dest_images[0]["url"]
+                    trip_plan.destination_info.media_credit = f"Photo by {dest_images[0]['credit']}"
             except Exception as e:
-                print(f"WARNING: Failed to fetch image for origin city: {e}")
+                print(f"WARNING: Failed to fetch image for destination info: {e}")
 
     except Exception as e:
         print(f"ERROR: Media enrichment failed completely: {e}")
