@@ -59,6 +59,10 @@ async def get_background_videos_api():
 async def fetch_recommendations_api(lat: float, lng: float):
     return await get_recommendations(lat, lng)
 
+@app.get("/api/health")
+def health_check():
+    return {"status": "ok", "env_check": "OPENAI_API_KEY" in os.environ}
+
 @app.get("/")
 def read_root():
     return {"message": "Weekend Traveller API"}
