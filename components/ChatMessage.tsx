@@ -201,3 +201,57 @@ export default function ChatMessage({ role, content, data }: ChatMessageProps) {
         </div>
     );
 }
+
+function ActivityItem({ activity }: { activity: any }) {
+    const [showFullDesc, setShowFullDesc] = useState(false);
+    const descPreview = activity.description ? activity.description.substring(0, 150) + '...' : '';
+    const shouldTruncate = activity.description && activity.description.length > 150;
+
+    return (
+        <div className="bg-white/5 p-3 rounded-lg hover:bg-white/10 transition-colors border border-white/5">
+            {/* Activity Image */}
+            {activity.image_url && (
+                <div className="w-full h-40 rounded-md overflow-hidden bg-zinc-800 mb-3">
+                    <img src={activity.image_url} alt={activity.activity} className="w-full h-full object-cover" />
+                </div>
+            )}
+            <div className="flex flex-col">
+                <span className="text-sm font-semibold text-zinc-200 mb-1">{activity.activity}</span>
+                <span className="text-xs text-zinc-500 flex items-center gap-1 mb-2">
+                    <Clock className="w-3 h-3" /> {activity.time}
+                </span>
+                {activity.description && (
+                    <div>
+                        <p className="text-xs text-zinc-400 leading-relaxed mb-2">
+                            {showFullDesc ? activity.description : descPreview}
+                        </p>
+                        {shouldTruncate && (
+                            <button
+                                onClick={() => setShowFullDesc(!showFullDesc)}
+                                className="text-xs text-purple-400 hover:text-purple-300 font-medium mb-2"
+                            >
+                                {showFullDesc ? 'Show less' : 'Read more'}
+                            </button>
+                        )}
+                    </div>
+                )}
+                {activity.nearby_attractions && activity.nearby_attractions.length > 0 && (
+                    <div className="mt-2 pt-2 border-t border-white/10">
+                        <p className="text-xs font-semibold text-zinc-300 mb-1">Nearby:</p>
+                        <ul className="text-xs text-zinc-500 space-y-0.5">
+                            {activity.nearby_attractions.map((attr: string, idx: number) => (
+                                <li key={idx} className="flex items-start">
+                                    <span className="mr-1">•</span>
+                                    <span>{attr}</span>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                )}
+                {activity.media_credit && (
+                    <p className="text-[9px] text-zinc-600 mt-2 italic">{activity.media_credit}</p>
+                )}
+            </div>
+        </div>
+    );
+}
