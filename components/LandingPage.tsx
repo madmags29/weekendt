@@ -226,4 +226,3 @@ export default function LandingPage({ onSearch }: LandingPageProps) {
         </div>
     );
 }
-```
