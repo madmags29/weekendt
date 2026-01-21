@@ -82,6 +82,9 @@ async def generate_trip_plan(request: SearchRequest) -> TripPlan:
             # images[0] is now a dict {url, credit, source}
             trip_plan.hero_image = images[0]["url"]
             trip_plan.media_credit = f"Photo by {images[0]['credit']} on {images[0]['source']}"
+        else:
+            # Fallback Hero
+            trip_plan.hero_image = "https://images.pexels.com/photos/346885/pexels-photo-346885.jpeg"
             
         if videos:
             trip_plan.hero_video = videos[0]["url"]
@@ -113,7 +116,13 @@ async def generate_trip_plan(request: SearchRequest) -> TripPlan:
 
                 except Exception as e:
                     print(f"WARNING: Failed to fetch image for activity {activity.activity}: {e}")
+                    # Fallback Image
+                    activity.image_url = "https://images.pexels.com/photos/2387873/pexels-photo-2387873.jpeg?auto=compress&cs=tinysrgb&w=400"
                     continue
+                
+                # Check if image was incorrectly skipped
+                if not activity.image_url:
+                     activity.image_url = "https://images.pexels.com/photos/2387873/pexels-photo-2387873.jpeg?auto=compress&cs=tinysrgb&w=400"
 
         # Fetch Origin City Image
         if trip_plan.origin_coordinates:
