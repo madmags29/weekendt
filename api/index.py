@@ -4,7 +4,7 @@ import os
 # Add the current directory to sys.path to allow imports from local files
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from app.routers import search
 
@@ -18,6 +18,18 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+@app.get("/api/debug-vars")
+def debug_vars(request: Request):
+    return {
+        "headers": dict(request.headers),
+        "url": str(request.url),
+        "base_url": str(request.base_url),
+        "path_params": request.path_params,
+        "query_params": dict(request.query_params),
+        "client_host": request.client.host if request.client else None
+    }
+
 
 # Mount api router
 from app.schemas import RecommendationResponse
