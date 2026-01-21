@@ -1,6 +1,8 @@
 # Environment variables
 .env
 *.env
+.env.local
+.env.production
 
 # Python
 __pycache__/
@@ -11,6 +13,7 @@ __pycache__/
 venv/
 env/
 ENV/
+backend/venv/
 
 # Node
 node_modules/
@@ -38,3 +41,6 @@ logs/
 *.db
 *.sqlite
 *.sqlite3
+
+# Vercel
+.vercel
