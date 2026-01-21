@@ -108,59 +108,9 @@ export default function ChatMessage({ role, content, data }: ChatMessageProps) {
                                                 </span>
                                             </p>
                                             <div className="grid gap-3">
-                                                {day.activities.map((a, i) => {
-                                                    const [showFullDesc, setShowFullDesc] = useState(false);
-                                                    const descPreview = a.description ? a.description.substring(0, 150) + '...' : '';
-                                                    const shouldTruncate = a.description && a.description.length > 150;
-
-                                                    return (
-                                                        <div key={i} className="bg-white/5 p-3 rounded-lg hover:bg-white/10 transition-colors border border-white/5">
-                                                            {/* Activity Image */}
-                                                            {a.image_url && (
-                                                                <div className="w-full h-40 rounded-md overflow-hidden bg-zinc-800 mb-3">
-                                                                    <img src={a.image_url} alt={a.activity} className="w-full h-full object-cover" />
-                                                                </div>
-                                                            )}
-                                                            <div className="flex flex-col">
-                                                                <span className="text-sm font-semibold text-zinc-200 mb-1">{a.activity}</span>
-                                                                <span className="text-xs text-zinc-500 flex items-center gap-1 mb-2">
-                                                                    <Clock className="w-3 h-3" /> {a.time}
-                                                                </span>
-                                                                {a.description && (
-                                                                    <div>
-                                                                        <p className="text-xs text-zinc-400 leading-relaxed mb-2">
-                                                                            {showFullDesc ? a.description : descPreview}
-                                                                        </p>
-                                                                        {shouldTruncate && (
-                                                                            <button
-                                                                                onClick={() => setShowFullDesc(!showFullDesc)}
-                                                                                className="text-xs text-purple-400 hover:text-purple-300 font-medium mb-2"
-                                                                            >
-                                                                                {showFullDesc ? 'Show less' : 'Read more'}
-                                                                            </button>
-                                                                        )}
-                                                                    </div>
-                                                                )}
-                                                                {a.nearby_attractions && a.nearby_attractions.length > 0 && (
-                                                                    <div className="mt-2 pt-2 border-t border-white/10">
-                                                                        <p className="text-xs font-semibold text-zinc-300 mb-1">Nearby:</p>
-                                                                        <ul className="text-xs text-zinc-500 space-y-0.5">
-                                                                            {a.nearby_attractions.map((attr, idx) => (
-                                                                                <li key={idx} className="flex items-start">
-                                                                                    <span className="mr-1">•</span>
-                                                                                    <span>{attr}</span>
-                                                                                </li>
-                                                                            ))}
-                                                                        </ul>
-                                                                    </div>
-                                                                )}
-                                                                {a.media_credit && (
-                                                                    <p className="text-[9px] text-zinc-600 mt-2 italic">{a.media_credit}</p>
-                                                                )}
-                                                            </div>
-                                                        </div>
-                                                    );
-                                                })}
+                                                {day.activities.map((a, i) => (
+                                                    <ActivityItem key={i} activity={a} />
+                                                ))}
                                             </div>
                                         </div>
                                     </div>

@@ -57,7 +57,7 @@ export default function LandingPage({ onSearch }: LandingPageProps) {
                         .then(data => {
                             if (data.destinations && data.destinations.length > 0) {
                                 // Map to UI format
-                                const newDestinations = data.destinations.map((d: any) => ({
+                                const newDestinations = data.destinations.map((d: { name: string; image_url?: string; description: string }) => ({
                                     name: d.name,
                                     image: d.image_url || "https://images.pexels.com/photos/346885/pexels-photo-346885.jpeg", // Fallback
                                     desc: d.description
@@ -214,9 +214,7 @@ export default function LandingPage({ onSearch }: LandingPageProps) {
                                 <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent" />
                                 <div className="absolute bottom-0 left-0 p-4 text-left">
                                     <h3 className="text-xl font-bold">{dest.name}</h3>
-                                    <p className="text-xs text-zinc-300 flex items-center gap-1">
-                                        <MapPin className="w-3 h-3" /> {dest.desc}
-                                    </p>
+                                    <p className="text-sm text-gray-400 line-clamp-2 italic">&quot;{dest.desc}&quot;</p>
                                 </div>
                             </div>
                         ))}
