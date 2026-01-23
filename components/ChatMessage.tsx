@@ -22,10 +22,10 @@ export default function ChatMessage({ role, content, data, onSave }: ChatMessage
 
             {/* Avatar */}
             <div className={clsx(
-                "w-8 h-8 rounded-full flex items-center justify-center shrink-0 shadow-lg",
+                "w-8 h-8 rounded-full flex items-center justify-center shrink-0 shadow-lg transition-colors",
                 isAi
                     ? "bg-gradient-to-br from-purple-500 to-indigo-600 text-white ring-2 ring-purple-500/20"
-                    : "bg-zinc-800 text-zinc-400 ring-2 ring-zinc-700"
+                    : "bg-white dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 ring-2 ring-gray-200 dark:ring-zinc-700"
             )}>
                 {isAi ? <Bot className="w-4 h-4" /> : <User className="w-4 h-4" />}
             </div>
@@ -37,9 +37,9 @@ export default function ChatMessage({ role, content, data, onSave }: ChatMessage
                 isAi ? "items-start" : "items-end"
             )}>
                 <div className={clsx(
-                    "px-5 py-3.5 rounded-2xl text-sm leading-relaxed shadow-md backdrop-blur-md",
+                    "px-5 py-3.5 rounded-2xl text-sm leading-relaxed shadow-md backdrop-blur-md transition-colors",
                     isAi
-                        ? "bg-white/5 border border-white/10 text-zinc-100 rounded-tl-none"
+                        ? "bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 text-zinc-800 dark:text-zinc-100 rounded-tl-none"
                         : "bg-gradient-to-br from-purple-600 to-indigo-600 text-white rounded-tr-none font-medium"
                 )}>
                     {content}
@@ -47,7 +47,7 @@ export default function ChatMessage({ role, content, data, onSave }: ChatMessage
 
                 {/* Rich Content (Trip Plan Card) */}
                 {isAi && data && (
-                    <div className="w-full mt-2 bg-zinc-900/80 backdrop-blur-xl rounded-2xl border border-white/10 overflow-hidden shadow-2xl animate-in fade-in slide-in-from-bottom-5 ring-1 ring-white/5">
+                    <div className="w-full mt-2 bg-white/50 dark:bg-zinc-900/80 backdrop-blur-xl rounded-2xl border border-gray-200 dark:border-white/10 overflow-hidden shadow-2xl animate-in fade-in slide-in-from-bottom-5 ring-1 ring-black/5 dark:ring-white/5 transition-colors">
                         {/* Header Image */}
                         <div className="h-48 relative flex items-end p-6 overflow-hidden group">
                             {data.hero_image ? (
@@ -64,30 +64,29 @@ export default function ChatMessage({ role, content, data, onSave }: ChatMessage
                         </div>
 
                         {/* Quick Stats */}
-                        <div className="grid grid-cols-3 divide-x divide-gray-100 dark:divide-zinc-800 border-b border-gray-100 dark:border-zinc-800 bg-white/5">
+                        <div className="grid grid-cols-3 divide-x divide-gray-100 dark:divide-zinc-800 border-b border-gray-100 dark:border-zinc-800 bg-gray-50/50 dark:bg-white/5">
                             <div className="p-4 flex flex-col items-center text-center gap-1">
-                                <Clock className="w-5 h-5 text-blue-400" />
-                                <span className="text-xs font-medium text-zinc-300 leading-tight">{data.best_time_to_visit}</span>
+                                <Clock className="w-5 h-5 text-blue-500 dark:text-blue-400" />
+                                <span className="text-xs font-medium text-zinc-600 dark:text-zinc-300 leading-tight">{data.best_time_to_visit}</span>
                             </div>
                             <div className="p-4 flex flex-col items-center text-center gap-1">
-                                <IndianRupee className="w-5 h-5 text-green-400" />
-                                <span className="text-xs font-medium text-zinc-300 leading-tight">{data.estimated_budget}</span>
+                                <IndianRupee className="w-5 h-5 text-green-500 dark:text-green-400" />
+                                <span className="text-xs font-medium text-zinc-600 dark:text-zinc-300 leading-tight">{data.estimated_budget}</span>
                             </div>
                             <div className="p-4 flex flex-col items-center text-center gap-1">
-                                <Navigation className="w-5 h-5 text-purple-400" />
-                                <span className="text-xs font-medium text-zinc-300 leading-tight">{data.route_info.distance}</span>
+                                <Navigation className="w-5 h-5 text-purple-500 dark:text-purple-400" />
+                                <span className="text-xs font-medium text-zinc-600 dark:text-zinc-300 leading-tight">{data.route_info.distance}</span>
                             </div>
                         </div>
 
                         {/* Itinerary Snippet */}
-                        {/* Itinerary Snippet */}
-                        <div className="p-6 bg-zinc-950/30">
+                        <div className="p-6 bg-white/30 dark:bg-zinc-950/30">
                             <div className="flex items-center justify-between mb-4">
                                 <p className="text-xs font-bold text-zinc-500 uppercase tracking-widest">Itinerary</p>
                                 {data.itinerary.length > 2 && (
                                     <button
                                         onClick={() => setExpanded(!expanded)}
-                                        className="text-xs font-medium text-purple-400 hover:text-purple-300 transition-colors"
+                                        className="text-xs font-medium text-purple-600 dark:text-purple-400 hover:text-purple-700 dark:hover:text-purple-300 transition-colors"
                                     >
                                         {expanded ? "Collapse" : "View Full Plan"}
                                     </button>
@@ -98,13 +97,13 @@ export default function ChatMessage({ role, content, data, onSave }: ChatMessage
                                 {(expanded ? data.itinerary : data.itinerary.slice(0, 2)).map((day) => (
                                     <div key={day.day} className="flex gap-4 group/day animate-in fade-in slide-in-from-bottom-2 duration-500">
                                         <div className="flex-col items-center hidden sm:flex pt-1">
-                                            <div className="w-3 h-3 rounded-full bg-purple-500 ring-4 ring-purple-500/20 group-hover/day:bg-purple-400 transition-colors" />
-                                            <div className="w-0.5 h-full bg-zinc-800 -mb-6 mt-2" />
+                                            <div className="w-3 h-3 rounded-full bg-purple-500 ring-4 ring-purple-100 dark:ring-purple-500/20 group-hover/day:bg-purple-600 dark:group-hover/day:bg-purple-400 transition-colors" />
+                                            <div className="w-0.5 h-full bg-gray-200 dark:bg-zinc-800 -mb-6 mt-2" />
                                         </div>
                                         <div className="flex-1 pb-4">
-                                            <p className="text-base font-bold text-zinc-200 mb-3 flex items-center gap-3">
+                                            <p className="text-base font-bold text-zinc-800 dark:text-zinc-200 mb-3 flex items-center gap-3">
                                                 Day {day.day}
-                                                <span className="text-[10px] bg-zinc-800 px-2 py-0.5 rounded-full text-zinc-400 font-normal">
+                                                <span className="text-[10px] bg-gray-100 dark:bg-zinc-800 px-2 py-0.5 rounded-full text-zinc-500 dark:text-zinc-400 font-normal">
                                                     {day.activities.length} Activities
                                                 </span>
                                             </p>
@@ -119,10 +118,10 @@ export default function ChatMessage({ role, content, data, onSave }: ChatMessage
                             </div>
 
                             {!expanded && data.itinerary.length > 2 && (
-                                <div className="text-center mt-6 pt-4 border-t border-white/5">
+                                <div className="text-center mt-6 pt-4 border-t border-gray-100 dark:border-white/5">
                                     <button
                                         onClick={() => setExpanded(true)}
-                                        className="text-sm font-medium text-purple-400 hover:text-white transition-colors bg-white/5 hover:bg-white/10 px-4 py-2 rounded-full"
+                                        className="text-sm font-medium text-purple-600 dark:text-purple-400 hover:text-purple-700 dark:hover:text-white transition-colors bg-gray-100 dark:bg-white/5 hover:bg-gray-200 dark:hover:bg-white/10 px-4 py-2 rounded-full"
                                     >
                                         +{data.itinerary.length - 2} more days
                                     </button>
@@ -132,21 +131,21 @@ export default function ChatMessage({ role, content, data, onSave }: ChatMessage
 
                         {/* Hotels Section */}
                         {data.hotels && data.hotels.length > 0 && (
-                            <div className="p-6 bg-zinc-950/30 border-t border-white/5">
+                            <div className="p-6 bg-white/30 dark:bg-zinc-950/30 border-t border-gray-100 dark:border-white/5">
                                 <p className="text-xs font-bold text-zinc-500 uppercase tracking-widest mb-4">Recommended Hotels</p>
                                 <div className="grid gap-3">
                                     {data.hotels.map((hotel, idx) => (
-                                        <div key={idx} className="bg-white/5 p-4 rounded-lg border border-white/5 hover:bg-white/10 transition-colors">
+                                        <div key={idx} className="bg-white dark:bg-white/5 p-4 rounded-lg border border-gray-200 dark:border-white/5 hover:bg-gray-50 dark:hover:bg-white/10 transition-colors shadow-sm dark:shadow-none">
                                             <div className="flex items-start justify-between mb-2">
-                                                <h4 className="text-sm font-bold text-zinc-200">{hotel.name}</h4>
+                                                <h4 className="text-sm font-bold text-zinc-800 dark:text-zinc-200">{hotel.name}</h4>
                                                 <span className={clsx(
                                                     "text-xs px-2 py-0.5 rounded-full font-medium",
-                                                    hotel.price_range === "Budget" && "bg-green-500/20 text-green-300",
-                                                    hotel.price_range === "Mid-Range" && "bg-blue-500/20 text-blue-300",
-                                                    hotel.price_range === "Luxury" && "bg-purple-500/20 text-purple-300"
+                                                    hotel.price_range === "Budget" && "bg-green-100 dark:bg-green-500/20 text-green-700 dark:text-green-300",
+                                                    hotel.price_range === "Mid-Range" && "bg-blue-100 dark:bg-blue-500/20 text-blue-700 dark:text-blue-300",
+                                                    hotel.price_range === "Luxury" && "bg-purple-100 dark:bg-purple-500/20 text-purple-700 dark:text-purple-300"
                                                 )}>{hotel.price_range}</span>
                                             </div>
-                                            <p className="text-xs text-zinc-400 leading-relaxed">{hotel.description}</p>
+                                            <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">{hotel.description}</p>
                                         </div>
                                     ))}
                                 </div>
@@ -155,22 +154,22 @@ export default function ChatMessage({ role, content, data, onSave }: ChatMessage
 
                         {/* City Detail Info (Destination Only) */}
                         {data.destination_info && (
-                            <div className="p-6 bg-zinc-950/30 border-t border-white/5">
+                            <div className="p-6 bg-white/30 dark:bg-zinc-950/30 border-t border-gray-100 dark:border-white/5">
                                 <p className="text-xs font-bold text-zinc-500 uppercase tracking-widest mb-3">
                                     About {data.destination_info.city_name}
                                 </p>
-                                <p className="text-xs text-zinc-400 leading-relaxed mb-4">
+                                <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed mb-4">
                                     {data.destination_info.description}
                                 </p>
 
                                 {data.destination_info.top_attractions && data.destination_info.top_attractions.length > 0 && (
                                     <div className="mb-4">
-                                        <p className="text-xs font-semibold text-zinc-300 mb-2">Top Attractions:</p>
+                                        <p className="text-xs font-semibold text-zinc-700 dark:text-zinc-300 mb-2">Top Attractions:</p>
                                         <div className="grid gap-2">
                                             {data.destination_info.top_attractions.map((attr, idx) => (
-                                                <div key={idx} className="bg-white/5 p-3 rounded-lg border border-white/5">
-                                                    <h5 className="text-xs font-bold text-zinc-200 mb-1">{attr.name}</h5>
-                                                    <p className="text-xs text-zinc-400 leading-relaxed">{attr.description}</p>
+                                                <div key={idx} className="bg-white dark:bg-white/5 p-3 rounded-lg border border-gray-200 dark:border-white/5 shadow-sm dark:shadow-none">
+                                                    <h5 className="text-xs font-bold text-zinc-800 dark:text-zinc-200 mb-1">{attr.name}</h5>
+                                                    <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">{attr.description}</p>
                                                 </div>
                                             ))}
                                         </div>
@@ -191,27 +190,27 @@ function ActivityItem({ activity }: { activity: any }) {
     const shouldTruncate = activity.description && activity.description.length > 150;
 
     return (
-        <div className="bg-white/5 p-3 rounded-lg hover:bg-white/10 transition-colors border border-white/5">
+        <div className="bg-white dark:bg-white/5 p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-white/10 transition-colors border border-gray-200 dark:border-white/5 shadow-sm dark:shadow-none">
             {/* Activity Image */}
             {activity.image_url && (
-                <div className="w-full h-40 rounded-md overflow-hidden bg-zinc-800 mb-3">
+                <div className="w-full h-40 rounded-md overflow-hidden bg-gray-100 dark:bg-zinc-800 mb-3">
                     <img src={activity.image_url} alt={activity.activity} className="w-full h-full object-cover" />
                 </div>
             )}
             <div className="flex flex-col">
-                <span className="text-sm font-semibold text-zinc-200 mb-1">{activity.activity}</span>
+                <span className="text-sm font-semibold text-zinc-800 dark:text-zinc-200 mb-1">{activity.activity}</span>
                 <span className="text-xs text-zinc-500 flex items-center gap-1 mb-2">
                     <Clock className="w-3 h-3" /> {activity.time}
                 </span>
                 {activity.description && (
                     <div>
-                        <p className="text-xs text-zinc-400 leading-relaxed mb-2">
+                        <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed mb-2">
                             {showFullDesc ? activity.description : descPreview}
                         </p>
                         {shouldTruncate && (
                             <button
                                 onClick={() => setShowFullDesc(!showFullDesc)}
-                                className="text-xs text-purple-400 hover:text-purple-300 font-medium mb-2"
+                                className="text-xs text-purple-600 dark:text-purple-400 hover:text-purple-500 dark:hover:text-purple-300 font-medium mb-2"
                             >
                                 {showFullDesc ? 'Show less' : 'Read more'}
                             </button>
@@ -219,8 +218,8 @@ function ActivityItem({ activity }: { activity: any }) {
                     </div>
                 )}
                 {activity.nearby_attractions && activity.nearby_attractions.length > 0 && (
-                    <div className="mt-2 pt-2 border-t border-white/10">
-                        <p className="text-xs font-semibold text-zinc-300 mb-1">Nearby:</p>
+                    <div className="mt-2 pt-2 border-t border-gray-100 dark:border-white/10">
+                        <p className="text-xs font-semibold text-zinc-700 dark:text-zinc-300 mb-1">Nearby:</p>
                         <ul className="text-xs text-zinc-500 space-y-0.5">
                             {activity.nearby_attractions.map((attr: string, idx: number) => (
                                 <li key={idx} className="flex items-start">
@@ -232,7 +231,7 @@ function ActivityItem({ activity }: { activity: any }) {
                     </div>
                 )}
                 {activity.media_credit && (
-                    <p className="text-[9px] text-zinc-600 mt-2 italic">{activity.media_credit}</p>
+                    <p className="text-[9px] text-zinc-400 dark:text-zinc-600 mt-2 italic">{activity.media_credit}</p>
                 )}
             </div>
         </div>

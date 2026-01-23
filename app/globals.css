@@ -5,6 +5,9 @@
   --foreground: #171717;
 }
 
+/* Enable class-based dark mode */
+@variant dark (.dark &);
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -69,7 +72,7 @@
   border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-.aurora-bg {
+.dark .aurora-bg {
   background-color: #000;
   background-image:
     radial-gradient(at 0% 0%, hsla(253, 16%, 7%, 1) 0, transparent 50%),
