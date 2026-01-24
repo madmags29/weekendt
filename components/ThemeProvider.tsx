@@ -27,29 +27,17 @@ export function ThemeProvider({
     defaultTheme = "dark",
     storageKey = "vite-ui-theme",
 }: ThemeProviderProps) {
-    const [theme, setTheme] = useState<Theme>(defaultTheme);
-    const [mounted, setMounted] = useState(false);
-
-    useEffect(() => {
-        setMounted(true);
-        const storedTheme = localStorage.getItem(storageKey) as Theme;
-        if (storedTheme) {
-            setTheme(storedTheme);
-        }
-    }, [storageKey]);
+    const [theme, setTheme] = useState<Theme>("dark");
 
     useEffect(() => {
         const root = window.document.documentElement;
         root.classList.remove("light", "dark");
-        root.classList.add(theme);
-        localStorage.setItem(storageKey, theme);
-    }, [theme, storageKey]);
+        root.classList.add("dark");
+    }, []);
 
     const value = {
-        theme,
-        setTheme: (theme: Theme) => {
-            setTheme(theme);
-        },
+        theme: "dark" as Theme,
+        setTheme: () => { },
     };
 
     // Prevent hydration mismatch by not rendering until mounted

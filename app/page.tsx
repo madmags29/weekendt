@@ -6,16 +6,17 @@ import ChatLayout from "../components/ChatLayout";
 import LandingPage from "../components/LandingPage";
 
 function HomeContent() {
-  const [view, setView] = useState<'landing' | 'chat'>('landing');
-  const [initialQuery, setInitialQuery] = useState("");
   const searchParams = useSearchParams();
   const tripId = searchParams.get('tripId');
+  const [view, setView] = useState<'landing' | 'chat'>(tripId ? 'chat' : 'landing');
+  const [initialQuery, setInitialQuery] = useState("");
 
   useEffect(() => {
-    if (tripId) {
+    if (tripId && view !== 'chat') {
+      // eslint-disable-next-line react-hooks/exhaustive-deps
       setView('chat');
     }
-  }, [tripId]);
+  }, [tripId, view]);
 
   const handleSearch = (query: string) => {
     setInitialQuery(query);

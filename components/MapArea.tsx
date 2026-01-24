@@ -5,6 +5,7 @@ import { MapContainer, TileLayer, Marker, Popup, useMap, Polyline } from "react-
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import { TripPlan } from "../types";
+import { useTheme } from "./ThemeProvider";
 
 // Fix Leaflet marker icons in Next.js
 const iconUrl = "https://unpkg.com/leaflet@1.9.3/dist/images/marker-icon.png";
@@ -52,12 +53,12 @@ function MapUpdater({ plan }: { plan: TripPlan | null }) {
 }
 
 export default function MapArea({ plan }: MapAreaProps) {
-    // Default center (India)
     const center = [20.5937, 78.9629];
     const zoom = 5;
+    const { theme } = useTheme();
 
     return (
-        <div className="w-full h-full bg-gray-100 relative z-0">
+        <div className="w-full h-full bg-gray-100 dark:bg-zinc-900 relative z-0">
             <MapContainer
                 center={center as L.LatLngExpression}
                 zoom={zoom}
@@ -65,8 +66,9 @@ export default function MapArea({ plan }: MapAreaProps) {
                 className="w-full h-full"
             >
                 <TileLayer
-                    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+
                 />
                 <MapUpdater plan={plan} />
 

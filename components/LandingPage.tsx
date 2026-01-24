@@ -158,18 +158,7 @@ export default function LandingPage({ onSearch }: LandingPageProps) {
                     </nav>
 
                     <div className="mt-6 pt-6 border-t border-gray-200 dark:border-white/10">
-                        <button
-                            onClick={toggleTheme}
-                            className="flex items-center justify-between w-full p-3 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 transition-colors group"
-                        >
-                            <span className="flex items-center gap-3 text-zinc-600 dark:text-zinc-400 group-hover:text-zinc-900 dark:group-hover:text-white">
-                                {theme === 'dark' ? <Moon className="w-5 h-5" /> : <Sun className="w-5 h-5" />}
-                                {theme === 'dark' ? 'Dark Mode' : 'Light Mode'}
-                            </span>
-                            <div className={`w-10 h-5 rounded-full relative transition-colors ${theme === 'dark' ? 'bg-purple-600' : 'bg-zinc-300'}`}>
-                                <div className={`absolute top-1 w-3 h-3 rounded-full bg-white transition-transform ${theme === 'dark' ? 'left-6' : 'left-1'}`} />
-                            </div>
-                        </button>
+
                     </div>
 
                     <div className="mt-auto pt-6 border-t border-gray-200 dark:border-white/5">
@@ -194,7 +183,7 @@ export default function LandingPage({ onSearch }: LandingPageProps) {
                     Weekend Traveller
                 </h1>
                 <p className="text-base sm:text-lg md:text-xl text-zinc-600 dark:text-zinc-100 mb-8 md:mb-12 font-light tracking-wide drop-shadow-md px-4 transition-colors duration-500">
-                    Discover India's hidden gems with AI.
+                    Discover India&apos;s hidden gems with AI.
                 </p>
 
                 {/* Search Bar */}
