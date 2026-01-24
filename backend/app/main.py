@@ -1,7 +1,13 @@
 from dotenv import load_dotenv
 import os
+from pathlib import Path
 
-load_dotenv()
+# Get the backend directory path
+backend_dir = Path(__file__).resolve().parent.parent
+env_path = backend_dir / '.env'
+
+# Load environment variables from .env file
+load_dotenv(dotenv_path=env_path)
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware

@@ -4,6 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import StructuredData from "@/components/StructuredData";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
+import Preloader from "@/components/Preloader";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -72,6 +73,9 @@ export const metadata: Metadata = {
   verification: {
     google: 'V8n7TDg8nXjG8MSM24eAinDv6NLj4Mel31NizS_cX1o',
   },
+  other: {
+    'google-adsense-account': 'ca-pub-9460255466960810',
+  },
   icons: {
     icon: '/favicon.ico',
     apple: '/apple-touch-icon.png',
@@ -90,6 +94,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         suppressHydrationWarning
       >
+        <Preloader />
         <GoogleAnalytics />
         <ThemeProvider defaultTheme="dark">
           <StructuredData />
