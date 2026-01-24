@@ -77,8 +77,8 @@ export const metadata: Metadata = {
     'google-adsense-account': 'ca-pub-9460255466960810',
   },
   icons: {
-    icon: '/favicon.ico',
-    apple: '/apple-touch-icon.png',
+    icon: '/logo.svg',
+    apple: '/logo.png',
   },
   manifest: '/manifest.json',
 };

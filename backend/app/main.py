@@ -46,12 +46,12 @@ async def get_background_videos():
     try:
         videos = await fetch_destination_videos("India monuments mountains nature green cinematic", per_page=40)
         if not videos:
-            # Fallback
-            return ["https://cdn.pixabay.com/video/2020/01/05/30902-383794165_large.mp4"]
+            # Fallback to a working video URL
+            return [{"url": "https://videos.pexels.com/video-files/6583706/6583706-uhd_3840_2160_25fps.mp4", "credit": "shalender kumar", "source": "Pexels"}]
         return videos
     except Exception as e:
         print(f"Error fetching background videos: {e}")
-        return ["https://cdn.pixabay.com/video/2020/01/05/30902-383794165_large.mp4"]
+        return [{"url": "https://videos.pexels.com/video-files/6583706/6583706-uhd_3840_2160_25fps.mp4", "credit": "shalender kumar", "source": "Pexels"}]
 
 from app.services.ai_service import get_recommendations
 from app.schemas import RecommendationResponse

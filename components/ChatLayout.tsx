@@ -227,7 +227,7 @@ export default function ChatLayout({ initialQuery, initialTripId, onBack }: Chat
             {/* LEFT PANEL - CHAT */}
             <div
                 style={{ "--sidebar-width": `${sidebarWidth}px` } as React.CSSProperties}
-                className="flex flex-col bg-white/80 border-r border-gray-200 relative z-10 shadow-2xl backdrop-blur-3xl transition-all duration-300 ease-linear shrink-0 w-full md:w-[var(--sidebar-width)]"
+                className="flex flex-col h-screen bg-white/80 border-r border-gray-200 relative z-10 shadow-2xl backdrop-blur-3xl transition-all duration-300 ease-linear shrink-0 w-full md:w-[var(--sidebar-width)]"
             >
                 {/* Drag Handle */}
                 <div
