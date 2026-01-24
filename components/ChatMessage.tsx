@@ -3,7 +3,7 @@
 import { useState } from "react";
 
 import { TripPlan, Sightseeing } from "../types";
-import { Bot, User, MapPin, Clock, IndianRupee, Navigation } from "lucide-react";
+import { Bot, User, Clock, IndianRupee, Navigation } from "lucide-react";
 import clsx from "clsx";
 import AdSense from "./AdSense";
 

@@ -172,7 +172,7 @@ export default function ChatLayout({ initialQuery, initialTripId, onBack }: Chat
                 }
             ]);
 
-        } catch (err) {
+        } catch {
             setMessages((prev) => [
                 ...prev,
                 { role: "ai", content: "Sorry, I couldn't find a plan for that. Please try specifying a city like 'Jaipur' or 'Goa'." }
@@ -219,9 +219,7 @@ export default function ChatLayout({ initialQuery, initialTripId, onBack }: Chat
         }
     };
 
-    const toggleTheme = () => {
-        setTheme(theme === "dark" ? "light" : "dark");
-    };
+
 
     return (
         <div className="flex h-screen bg-gray-50 overflow-hidden font-sans selection:bg-purple-500/30 transition-colors duration-500">
@@ -323,15 +321,4 @@ export default function ChatLayout({ initialQuery, initialTripId, onBack }: Chat
     );
 }
 
-function BotIcon({ className }: { className?: string }) {
-    return (
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
-            <path d="M12 8V4H8" />
-            <rect width="16" height="12" x="4" y="8" rx="2" />
-            <path d="M2 14h2" />
-            <path d="M20 14h2" />
-            <path d="M15 13v2" />
-            <path d="M9 13v2" />
-        </svg>
-    )
-}
+

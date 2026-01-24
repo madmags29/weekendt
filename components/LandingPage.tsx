@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { Search, MapPin, ArrowRight, Menu, X, Home, History, Settings, Info, Moon, Sun } from "lucide-react";
+import { Search, ArrowRight, Menu, X, Home, History, Settings, Info } from "lucide-react";
 import { useTheme } from "./ThemeProvider";
 
 interface LandingPageProps {
@@ -91,9 +91,7 @@ export default function LandingPage({ onSearch }: LandingPageProps) {
         }
     };
 
-    const toggleTheme = () => {
-        setTheme(theme === "dark" ? "light" : "dark");
-    };
+
 
     return (
         <div className="relative h-screen w-screen overflow-hidden bg-gray-50 dark:bg-black text-zinc-900 dark:text-white font-sans transition-colors duration-500">

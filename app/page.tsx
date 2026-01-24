@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, Suspense } from "react";
+import { useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import ChatLayout from "../components/ChatLayout";
 import LandingPage from "../components/LandingPage";
@@ -10,13 +10,6 @@ function HomeContent() {
   const tripId = searchParams.get('tripId');
   const [view, setView] = useState<'landing' | 'chat'>(tripId ? 'chat' : 'landing');
   const [initialQuery, setInitialQuery] = useState("");
-
-  useEffect(() => {
-    if (tripId && view !== 'chat') {
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-      setView('chat');
-    }
-  }, [tripId, view]);
 
   const handleSearch = (query: string) => {
     setInitialQuery(query);

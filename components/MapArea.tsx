@@ -5,7 +5,7 @@ import { MapContainer, TileLayer, Marker, Popup, useMap, Polyline } from "react-
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import { TripPlan } from "../types";
-import { useTheme } from "./ThemeProvider";
+
 
 // Fix Leaflet marker icons in Next.js
 const iconUrl = "https://unpkg.com/leaflet@1.9.3/dist/images/marker-icon.png";
@@ -55,7 +55,7 @@ function MapUpdater({ plan }: { plan: TripPlan | null }) {
 export default function MapArea({ plan }: MapAreaProps) {
     const center = [20.5937, 78.9629];
     const zoom = 5;
-    const { theme } = useTheme();
+
 
     return (
         <div className="w-full h-full bg-gray-100 dark:bg-zinc-900 relative z-0">
