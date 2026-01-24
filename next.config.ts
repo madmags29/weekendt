@@ -1,6 +1,13 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  output: 'export',
+  images: {
+    unoptimized: true,
+  },
+  // Static export does not support rewrites.
+  // API requests must use the full URL defined in NEXT_PUBLIC_API_URL.
+  /*
   async rewrites() {
     return [
       {
@@ -9,6 +16,7 @@ const nextConfig: NextConfig = {
       },
     ];
   },
+  */
 };
 
 export default nextConfig;
