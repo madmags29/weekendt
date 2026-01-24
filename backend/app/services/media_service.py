@@ -21,7 +21,7 @@ STATIC_FALLBACK_IMAGES = [
 ]
 
 STATIC_FALLBACK_VIDEOS = [
-    {"url": "https://videos.pexels.com/video-files/6583706/6583706-uhd_3840_2160_25fps.mp4", "credit": "shalender kumar", "source": "Pexels"},
+    {"url": "https://videos.pexels.com/video-files/4125028/4125028-hd_1920_1080_25fps.mp4", "credit": "Rostislav Uzunov", "source": "Pexels"},
     {"url": "https://videos.pexels.com/video-files/855018/855018-hd_1920_1080_30fps.mp4", "credit": "Pexels", "source": "Pexels"},
     {"url": "https://videos.pexels.com/video-files/2169880/2169880-hd_1920_1080_30fps.mp4", "credit": "Pexels", "source": "Pexels"}
 ]
@@ -52,10 +52,26 @@ async def fetch_from_pexels(query: str, type: str = "photos", per_page: int = 3)
                     })
             else:
                 for vid in data.get("videos", []):
-                     files = sorted(vid["video_files"], key=lambda x: x["width"] * x["height"], reverse=True)
-                     if files:
+                     # Smart Selection: Prioritize HD (1080p/720p) over 4K for better streaming
+                     video_files = vid.get("video_files", [])
+                     
+                     # 1. Try to find 1080p or 720p (Width between 1280 and 1920)
+                     hd_files = [v for v in video_files if 1280 <= v["width"] <= 1920]
+                     
+                     selected_file = None
+                     if hd_files:
+                         # Sort by size to get the highest bitrate/quality within HD range
+                         hd_files.sort(key=lambda x: x["width"] * x["height"], reverse=True)
+                         selected_file = hd_files[0]
+                     elif video_files:
+                         # Fallback: If no HD found, unfortunately take the largest available (likely SD or UHD)
+                         # We sort to avoid picking tiny previews
+                         video_files.sort(key=lambda x: x["width"] * x["height"], reverse=True)
+                         selected_file = video_files[0]
+                         
+                     if selected_file:
                          results.append({
-                             "url": files[0]["link"],
+                             "url": selected_file["link"],
                              "credit": vid["user"]["name"],
                              "source": "Pexels"
                          })
