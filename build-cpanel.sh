@@ -15,6 +15,10 @@ rm -f backend_bundle.zip
 echo "🏗️  Building Frontend..."
 npm run build
 
+# Copy .htaccess to output directory
+echo "📄 Copying .htaccess..."
+cp public/.htaccess out/.htaccess
+
 echo "📦 Zipping Frontend (ready for public_html)..."
 cd out
 zip -r ../frontend_bundle.zip .
@@ -22,13 +26,19 @@ cd ..
 
 # 3. Package Backend
 echo "🐍 Packaging Backend..."
-# Creating a zip of necessary backend files
-# Assuming 'app' contains the python code and 'requirements.txt' is in root
-zip -r backend_bundle.zip app requirements.txt passenger_wsgi.py backend/venv
+# Package backend files (excluding venv - will be created on server)
+zip -r backend_bundle.zip backend/app backend/requirements.txt backend/.env passenger_wsgi.py
 
 echo "✅ Build Complete!"
 echo "--------------------------------------------------------"
 echo "📂 Output:"
-echo "   - frontend_bundle.zip  -> Upload contents to 'public_html'"
-echo "   - backend_bundle.zip   -> Upload to your app directory"
+echo "   - frontend_bundle.zip  -> Upload & extract to 'public_html'"
+echo "   - backend_bundle.zip   -> Upload & extract to app root"
+echo ""
+echo "📝 Next Steps:"
+echo "   1. Upload frontend_bundle.zip to public_html and extract"
+echo "   2. Upload backend_bundle.zip to /home/devde143/repositories/weekendtravellers.com and extract"
+echo "   3. SSH into server and run: cd /home/devde143/repositories/weekendtravellers.com/backend && python3 -m venv venv && source venv/bin/activate && pip install -r requirements.txt"
+echo "   4. Configure Passenger in cPanel to use passenger_wsgi.py"
+echo "   5. Restart the application"
 echo "--------------------------------------------------------"

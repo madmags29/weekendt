@@ -13,6 +13,8 @@ app = FastAPI(title="Weekend Traveller AI Search Engine")
 origins = [
     "http://localhost:3000",
     "http://localhost:3001",
+    "https://weekendtravellers.com",
+    "http://weekendtravellers.com",
 ]
 
 app.add_middleware(
