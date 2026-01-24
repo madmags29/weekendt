@@ -49,6 +49,12 @@ export const metadata: Metadata = {
     siteName: 'Weekend Travellers',
     images: [
       {
+        url: '/logo.svg',
+        width: 200,
+        height: 200,
+        alt: 'Weekend Travellers Logo',
+      },
+      {
         url: '/og-image.jpg',
         width: 1200,
         height: 630,
@@ -64,7 +70,7 @@ export const metadata: Metadata = {
     creator: '@weekendtravellers',
   },
   verification: {
-    google: 'your-google-verification-code',
+    google: 'V8n7TDg8nXjG8MSM24eAinDv6NLj4Mel31NizS_cX1o',
   },
   icons: {
     icon: '/favicon.ico',

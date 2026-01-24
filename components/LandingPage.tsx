@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Search, ArrowRight, Menu, X, Home, History, Settings, Info } from "lucide-react";
 import { useTheme } from "./ThemeProvider";
+import Logo from "./Logo";
 
 interface LandingPageProps {
     onSearch: (query: string) => void;
@@ -33,6 +34,13 @@ export default function LandingPage({ onSearch }: LandingPageProps) {
     useEffect(() => {
         const API_URL = process.env.NEXT_PUBLIC_API_URL || '/api';
 
+        // Fallback video in case API fails
+        const fallbackVideo = {
+            url: "https://cdn.pixabay.com/video/2020/01/05/30902-383794165_large.mp4",
+            credit: "Pixabay",
+            source: "Pixabay"
+        };
+
         // 1. Fetch background videos
         fetch(`${API_URL}/background-videos`)
             .then(res => {
@@ -47,9 +55,16 @@ export default function LandingPage({ onSearch }: LandingPageProps) {
                     } else {
                         setVideoData(randomVideo);
                     }
+                } else {
+                    // No videos returned, use fallback
+                    setVideoData(fallbackVideo);
                 }
             })
-            .catch(err => console.error("Failed to fetch background videos:", err));
+            .catch(err => {
+                console.error("Failed to fetch background videos:", err);
+                // Use fallback video on error
+                setVideoData(fallbackVideo);
+            });
 
         // 2. Fetch User Location & Recommendations
         if (navigator.geolocation) {
@@ -176,9 +191,14 @@ export default function LandingPage({ onSearch }: LandingPageProps) {
             {/* Content Centered */}
             <div className="relative z-10 flex flex-col items-center justify-center h-full px-4 text-center">
 
+                {/* Logo */}
+                <div className="mb-6">
+                    <Logo width={120} height={120} className="drop-shadow-2xl" />
+                </div>
+
                 {/* Hero Text */}
                 <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold tracking-tight mb-2 drop-shadow-2xl bg-clip-text text-transparent bg-gradient-to-b from-zinc-800 to-zinc-500 dark:from-white dark:to-white/70 px-2 transition-colors duration-500">
-                    Weekend Traveller
+                    Weekend Travellers
                 </h1>
                 <p className="text-base sm:text-lg md:text-xl text-zinc-600 dark:text-zinc-100 mb-8 md:mb-12 font-light tracking-wide drop-shadow-md px-4 transition-colors duration-500">
                     Discover India&apos;s hidden gems with AI.

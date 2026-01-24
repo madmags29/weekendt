@@ -7,6 +7,7 @@ import ChatMessage from "./ChatMessage";
 import ThinkingIndicator from "./ThinkingIndicator";
 import { TripPlan, SearchRequest } from "../types";
 import { useTheme } from "./ThemeProvider";
+import Logo from "./Logo";
 
 // Dynamic import for MapArea to avoid SSR issues with Leaflet
 const MapArea = dynamic(() => import("./MapArea"), {

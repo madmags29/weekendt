@@ -5,6 +5,9 @@ const nextConfig: NextConfig = {
   images: {
     unoptimized: true,
   },
+  devIndicators: {
+    position: 'bottom-right',
+  },
   // Static export does not support rewrites.
   // API requests must use the full URL defined in NEXT_PUBLIC_API_URL.
   /*
