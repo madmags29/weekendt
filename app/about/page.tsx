@@ -1,7 +1,15 @@
-"use client";
-
+import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowLeft, Compass, Heart, Zap } from "lucide-react";
+
+export const metadata: Metadata = {
+    title: "About Us",
+    description: "Learn about Weekend Travellers - AI-powered weekend trip planner simplifying travel planning for everyone in India.",
+    openGraph: {
+        title: "About Weekend Travellers",
+        description: "Discover how we're making weekend travel planning effortless with AI",
+    },
+};
 
 export default function About() {
     return (

@@ -1,7 +1,15 @@
-"use client";
-
+import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowLeft, Shield } from "lucide-react";
+
+export const metadata: Metadata = {
+    title: "Privacy Policy",
+    description: "Weekend Travellers privacy policy - Learn how we protect your data and respect your privacy.",
+    robots: {
+        index: true,
+        follow: true,
+    },
+};
 
 export default function Privacy() {
     return (

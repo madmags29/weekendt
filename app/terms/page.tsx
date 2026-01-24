@@ -1,7 +1,15 @@
-"use client";
-
+import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowLeft, FileText } from "lucide-react";
+
+export const metadata: Metadata = {
+    title: "Terms of Service",
+    description: "Weekend Travellers terms of service - Read our terms and conditions for using our AI-powered trip planner.",
+    robots: {
+        index: true,
+        follow: true,
+    },
+};
 
 export default function Terms() {
     return (
