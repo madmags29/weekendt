@@ -129,7 +129,13 @@ NEXT_PUBLIC_GOOGLE_ADSENSE_ID=ca-pub-XXXXXXXXXXXXXXXX
 
 You need to map URLs so that:
 - `https://weekendtravellers.com/*` → serves frontend from `public_html/`
-- `https://weekendtravellers.com/api/*` → routes to Python backend
+- `https://api.weekendtravellers.com/*` → routes to Python backend
+
+**Recommended Strategy: Subdomain**
+
+1.  Create a subdomain `api.weekendtravellers.com` in cPanel.
+2.  Point it to the document root `weekendtravellers.com/backend` (or wherever you extract `backend_bundle.zip`).
+3.  Use "Setup Python App" to serve this subdomain.
 
 **Option A: Using .htaccess in public_html**
 
@@ -282,24 +288,6 @@ If you encounter issues:
 2. Review Passenger logs
 3. Verify all environment variables
 4. Contact hosting provider for server-specific issues
-
-##  alternatif: CGI Deployment (Fallback)
-
-If Passenger doesn't work, you can use the CGI script `api.cgi` in your public folder.
-
-1.  **Frontend Bundle**: Upload `frontend_bundle.zip` to `public_html/` and extract.
-2.  **Permissions**: Ensure `api.cgi` has 755 permissions.
-    ```bash
-    chmod 755 public_html/api.cgi
-    ```
-3.  **Config**: Update `.htaccess` in `public_html` to route API requests to this script.
-
-    ```apache
-    RewriteEngine On
-    RewriteRule ^api/(.*)$ api.cgi/$1 [L,QSA]
-    ```
-
-4.  **Backend**: Upload `backend_bundle.zip` to `/home2/aceda53n/weekendtravellers.com` (one level up from public_html) so the script can import it.
 
 
 ---
