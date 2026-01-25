@@ -18,6 +18,8 @@ npm run build
 # Copy .htaccess to output directory
 echo "📄 Copying .htaccess..."
 cp public/.htaccess out/.htaccess
+cp public/api.cgi out/api.cgi
+chmod +x out/api.cgi
 
 echo "📦 Zipping Frontend (ready for public_html)..."
 cd out

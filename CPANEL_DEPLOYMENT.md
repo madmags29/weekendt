@@ -283,6 +283,25 @@ If you encounter issues:
 3. Verify all environment variables
 4. Contact hosting provider for server-specific issues
 
+##  alternatif: CGI Deployment (Fallback)
+
+If Passenger doesn't work, you can use the CGI script `api.cgi` in your public folder.
+
+1.  **Frontend Bundle**: Upload `frontend_bundle.zip` to `public_html/` and extract.
+2.  **Permissions**: Ensure `api.cgi` has 755 permissions.
+    ```bash
+    chmod 755 public_html/api.cgi
+    ```
+3.  **Config**: Update `.htaccess` in `public_html` to route API requests to this script.
+
+    ```apache
+    RewriteEngine On
+    RewriteRule ^api/(.*)$ api.cgi/$1 [L,QSA]
+    ```
+
+4.  **Backend**: Upload `backend_bundle.zip` to `/home/devde143/repositories/weekendtravellers.com` (one level up from public_html) so the script can import it.
+
+
 ---
 
 **Deployment Path**: `/home/devde143/repositories/weekendtravellers.com`  
