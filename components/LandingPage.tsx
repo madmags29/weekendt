@@ -272,6 +272,28 @@ export default function LandingPage({ onSearch }: LandingPageProps) {
                     )}
                 </div>
             </div>
+
+            {/* Social Media Links (Bottom Right) */}
+            <div className="absolute bottom-6 right-6 z-30 flex gap-4">
+                <a
+                    href="https://instagram.com/weekendtravellers.offical"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="p-2 bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/10 rounded-full text-zinc-600 dark:text-white/70 hover:text-pink-600 dark:hover:text-pink-400 transition-all hover:scale-110 shadow-lg"
+                    aria-label="Instagram"
+                >
+                    <Instagram className="w-5 h-5" />
+                </a>
+                <a
+                    href="https://youtube.com/weekendtravellers.offical"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="p-2 bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/10 rounded-full text-zinc-600 dark:text-white/70 hover:text-red-600 dark:hover:text-red-400 transition-all hover:scale-110 shadow-lg"
+                    aria-label="YouTube"
+                >
+                    <Youtube className="w-5 h-5" />
+                </a>
+            </div>
         </div>
     );
 }
