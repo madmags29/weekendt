@@ -274,7 +274,7 @@ export default function LandingPage({ onSearch }: LandingPageProps) {
             </div>
 
             {/* Social Media Links (Bottom Right) */}
-            <div className="absolute bottom-6 right-6 z-30 flex gap-4">
+            <div className="absolute bottom-6 left-6 z-30 flex gap-4">
                 <a
                     href="https://instagram.com/weekendtravellers.offical"
                     target="_blank"
