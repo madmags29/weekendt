@@ -36,9 +36,9 @@ export default function LandingPage({ onSearch }: LandingPageProps) {
 
         // Fallback video in case API fails
         const fallbackVideo = {
-            url: "https://cdn.pixabay.com/video/2020/01/05/30902-383794165_large.mp4",
-            credit: "Pixabay",
-            source: "Pixabay"
+            url: "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
+            credit: "Google Sample",
+            source: "Google"
         };
 
         // 1. Fetch background videos
