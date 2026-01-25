@@ -1,3 +1,4 @@
+import Script from "next/script";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
@@ -74,7 +75,7 @@ export const metadata: Metadata = {
     google: 'V8n7TDg8nXjG8MSM24eAinDv6NLj4Mel31NizS_cX1o',
   },
   other: {
-    'google-adsense-account': 'ca-pub-9460255466960810',
+    'google-adsense-account': 'pub-9460255466960810',
   },
   icons: {
     icon: '/logo.svg',
@@ -96,10 +97,18 @@ export default function RootLayout({
       >
         <Preloader />
         <GoogleAnalytics />
+        <Script
+          src="https://emrld.ltd/NDkyMjE5.js?t=492219"
+          strategy="afterInteractive"
+          data-noptimize="1"
+          data-cfasync="false"
+          data-wpfc-render="false"
+        />
         <ThemeProvider defaultTheme="dark">
           <StructuredData />
           {children}
         </ThemeProvider>
+
       </body>
     </html>
   );

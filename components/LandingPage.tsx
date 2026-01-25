@@ -109,7 +109,7 @@ export default function LandingPage({ onSearch }: LandingPageProps) {
 
 
     return (
-        <div className="relative h-screen w-screen overflow-hidden bg-gray-50 dark:bg-black text-zinc-900 dark:text-white font-sans transition-colors duration-500">
+        <div className="relative h-screen w-screen max-w-[100vw] overflow-x-hidden overflow-hidden bg-gray-50 dark:bg-black text-zinc-900 dark:text-white font-sans transition-colors duration-500">
             {/* Background Video (Only visible in Dark Mode or reduced opacity in Light) */}
             <div className={`absolute inset-0 transition-opacity duration-1000 ${loaded ? 'opacity-100' : 'opacity-0'}`}>
                 {videoData && (
@@ -146,7 +146,7 @@ export default function LandingPage({ onSearch }: LandingPageProps) {
                 <div className="p-6 flex flex-col h-full">
                     <div className="flex items-center justify-between mb-8">
                         <h2 className="text-xl font-bold tracking-tight text-zinc-900 dark:text-white">Menu</h2>
-                        <button onClick={() => setShowMenu(false)} className="p-2 hover:bg-black/5 dark:hover:bg-white/10 rounded-full transition-colors text-zinc-600 dark:text-zinc-300">
+                        <button onClick={() => setShowMenu(false)} className="p-3 hover:bg-black/5 dark:hover:bg-white/10 rounded-full transition-colors text-zinc-600 dark:text-zinc-300">
                             <X className="w-5 h-5" />
                         </button>
                     </div>
@@ -183,7 +183,7 @@ export default function LandingPage({ onSearch }: LandingPageProps) {
             {/* Menu Toggle Button (Visible when menu is closed) */}
             <button
                 onClick={() => setShowMenu(true)}
-                className={`absolute top-6 left-6 z-30 p-2.5 bg-white/20 dark:bg-black/20 hover:bg-white/40 dark:hover:bg-black/40 backdrop-blur-md border border-white/20 dark:border-white/10 rounded-full text-zinc-900 dark:text-white transition-all hover:scale-105 ${showMenu ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
+                className={`absolute top-6 left-6 z-30 p-3 bg-white/20 dark:bg-black/20 hover:bg-white/40 dark:hover:bg-black/40 backdrop-blur-md border border-white/20 dark:border-white/10 rounded-full text-zinc-900 dark:text-white transition-all hover:scale-105 ${showMenu ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
             >
                 <Menu className="w-6 h-6" />
             </button>
@@ -197,60 +197,62 @@ export default function LandingPage({ onSearch }: LandingPageProps) {
                 </div>
 
                 {/* Hero Text */}
-                <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold tracking-tight mb-2 drop-shadow-2xl bg-clip-text text-transparent bg-gradient-to-b from-zinc-800 to-zinc-500 dark:from-white dark:to-white/70 px-2 transition-colors duration-500">
+                <h1 className="text-3xl sm:text-5xl md:text-7xl font-bold tracking-tight mb-2 drop-shadow-2xl bg-clip-text text-transparent bg-gradient-to-b from-zinc-800 to-zinc-500 dark:from-white dark:to-white/70 px-2 transition-colors duration-500">
                     Weekend Travellers
                 </h1>
-                <p className="text-base sm:text-lg md:text-xl text-zinc-600 dark:text-zinc-100 mb-8 md:mb-12 font-light tracking-wide drop-shadow-md px-4 transition-colors duration-500">
+                <p className="text-base sm:text-lg md:text-xl text-zinc-600 dark:text-zinc-100 mb-6 md:mb-12 font-light tracking-wide drop-shadow-md px-4 transition-colors duration-500">
                     Discover India&apos;s hidden gems with AI.
                 </p>
 
                 {/* Search Bar */}
-                <form onSubmit={handleSearch} className="w-full max-w-2xl mb-12 md:mb-16 group relative px-4">
+                <form onSubmit={handleSearch} className="w-full max-w-2xl px-4 md:px-0 mb-12 md:mb-16 group relative">
                     <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 to-indigo-600 rounded-full opacity-30 group-hover:opacity-60 transition duration-500 blur-lg"></div>
                     <div className="relative flex items-center bg-white/50 dark:bg-white/10 backdrop-blur-xl border border-gray-200 dark:border-white/20 rounded-full p-2 transition-all group-focus-within:bg-white/80 dark:group-focus-within:bg-black/40 group-focus-within:border-purple-300 dark:group-focus-within:border-white/40 shadow-2xl">
-                        <Search className="w-6 h-6 text-zinc-400 dark:text-zinc-300 ml-4" />
+                        <Search className="w-6 h-6 text-zinc-400 dark:text-zinc-300 ml-4 flex-shrink-0" />
                         <input
                             type="text"
                             value={query}
                             onChange={(e) => setQuery(e.target.value)}
                             placeholder="Where do you want to start?"
                             autoComplete="off"
-                            className="flex-1 bg-transparent border-none text-zinc-900 dark:text-white text-lg px-4 py-3 focus:ring-0 focus:outline-none placeholder-zinc-500 dark:placeholder-zinc-400 font-light"
+                            className="flex-1 min-w-0 bg-transparent border-none text-zinc-900 dark:text-white text-base md:text-lg px-4 py-3 focus:ring-0 focus:outline-none placeholder-zinc-500 dark:placeholder-zinc-400 font-light"
                         />
                         <button
                             type="submit"
-                            className="bg-zinc-900 dark:bg-white text-white dark:text-black p-3 rounded-full hover:bg-zinc-700 dark:hover:bg-zinc-200 transition-colors shadow-lg"
+                            className="bg-zinc-900 dark:bg-white text-white dark:text-black p-3 rounded-full hover:bg-zinc-700 dark:hover:bg-zinc-200 transition-colors shadow-lg flex-shrink-0"
                         >
                             <ArrowRight className="w-5 h-5" />
                         </button>
                     </div>
                 </form>
 
-                {/* Top Destinations Cards */}
-                {loadingRecs ? (
-                    <div className="text-zinc-500 dark:text-zinc-400 animate-pulse">Finding hidden gems near you...</div>
-                ) : (
-                    <div className="grid grid-cols-2 md:grid-cols-5 gap-4 w-full max-w-5xl px-4">
-                        {destinations.map((dest) => (
-                            <div
-                                key={dest.name}
-                                onClick={() => onSearch(dest.name)}
-                                className="group relative h-48 md:h-64 rounded-2xl overflow-hidden cursor-pointer border border-gray-200 dark:border-white/10 hover:border-purple-400 dark:hover:border-white/40 transition-all shadow-lg hover:-translate-y-1"
-                            >
-                                <img
-                                    src={dest.image}
-                                    alt={dest.name}
-                                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-90 dark:opacity-80 group-hover:opacity-100"
-                                />
-                                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />
-                                <div className="absolute bottom-0 left-0 p-4 text-left">
-                                    <h3 className="text-xl font-bold text-white">{dest.name}</h3>
-                                    <p className="text-sm text-gray-300 line-clamp-2 italic">&quot;{dest.desc}&quot;</p>
+                {/* Top Destinations Cards - HIDDEN ON MOBILE */}
+                <div className="hidden md:block w-full max-w-5xl px-4">
+                    {loadingRecs ? (
+                        <div className="text-zinc-500 dark:text-zinc-400 animate-pulse">Finding hidden gems near you...</div>
+                    ) : (
+                        <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+                            {destinations.map((dest) => (
+                                <div
+                                    key={dest.name}
+                                    onClick={() => onSearch(dest.name)}
+                                    className="group relative h-48 md:h-64 rounded-2xl overflow-hidden cursor-pointer border border-gray-200 dark:border-white/10 hover:border-purple-400 dark:hover:border-white/40 transition-all shadow-lg hover:-translate-y-1"
+                                >
+                                    <img
+                                        src={dest.image}
+                                        alt={dest.name}
+                                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-90 dark:opacity-80 group-hover:opacity-100"
+                                    />
+                                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />
+                                    <div className="absolute bottom-0 left-0 p-4 text-left">
+                                        <h3 className="text-xl font-bold text-white">{dest.name}</h3>
+                                        <p className="text-sm text-gray-300 line-clamp-2 italic">&quot;{dest.desc}&quot;</p>
+                                    </div>
                                 </div>
-                            </div>
-                        ))}
-                    </div>
-                )}
+                            ))}
+                        </div>
+                    )}
+                </div>
             </div>
         </div>
     );
