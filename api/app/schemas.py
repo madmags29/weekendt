@@ -57,7 +57,6 @@ class TripPlan(BaseModel):
     route_info: RouteInfo
     itinerary: List[DayPlan]
     hotels: Optional[List[Hotel]] = None
-    destination_info: Optional[OriginInfo] = None # Detailed info about the destination
     origin_info: Optional[OriginInfo] = None
     hero_image: Optional[str] = None
     hero_video: Optional[str] = None

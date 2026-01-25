@@ -11,6 +11,21 @@ PIXABAY_BASE_URL = "https://pixabay.com/api/"
 PEXELS_BASE_URL = "https://api.pexels.com/v1/"
 UNSPLASH_BASE_URL = "https://api.unsplash.com/"
 
+# Robust Static Fallbacks for when APIs fail
+STATIC_FALLBACK_IMAGES = [
+    {"url": "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1", "credit": "Unsplash", "source": "Static"},
+    {"url": "https://images.unsplash.com/photo-1506012787146-f92b2d7d6d96", "credit": "Unsplash", "source": "Static"},
+    {"url": "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb", "credit": "Unsplash", "source": "Static"},
+    {"url": "https://images.pexels.com/photos/346885/pexels-photo-346885.jpeg", "credit": "Pexels", "source": "Static"},
+    {"url": "https://images.pexels.com/photos/1659438/pexels-photo-1659438.jpeg", "credit": "Pexels", "source": "Static"}
+]
+
+STATIC_FALLBACK_VIDEOS = [
+    {"url": "https://videos.pexels.com/video-files/4125028/4125028-hd_1920_1080_25fps.mp4", "credit": "Rostislav Uzunov", "source": "Pexels"},
+    {"url": "https://videos.pexels.com/video-files/855018/855018-hd_1920_1080_30fps.mp4", "credit": "Pexels", "source": "Pexels"},
+    {"url": "https://videos.pexels.com/video-files/2169880/2169880-hd_1920_1080_30fps.mp4", "credit": "Pexels", "source": "Pexels"}
+]
+
 async def fetch_from_pexels(query: str, type: str = "photos", per_page: int = 3) -> List[Dict[str, str]]:
     """Fetch media from Pexels (best quality)."""
     if not PEXELS_API_KEY:
@@ -37,10 +52,26 @@ async def fetch_from_pexels(query: str, type: str = "photos", per_page: int = 3)
                     })
             else:
                 for vid in data.get("videos", []):
-                     files = sorted(vid["video_files"], key=lambda x: x["width"] * x["height"], reverse=True)
-                     if files:
+                     # Smart Selection: Prioritize HD (1080p/720p) over 4K for better streaming
+                     video_files = vid.get("video_files", [])
+                     
+                     # 1. Try to find 1080p or 720p (Width between 1280 and 1920)
+                     hd_files = [v for v in video_files if 1280 <= v["width"] <= 1920]
+                     
+                     selected_file = None
+                     if hd_files:
+                         # Sort by size to get the highest bitrate/quality within HD range
+                         hd_files.sort(key=lambda x: x["width"] * x["height"], reverse=True)
+                         selected_file = hd_files[0]
+                     elif video_files:
+                         # Fallback: If no HD found, unfortunately take the largest available (likely SD or UHD)
+                         # We sort to avoid picking tiny previews
+                         video_files.sort(key=lambda x: x["width"] * x["height"], reverse=True)
+                         selected_file = video_files[0]
+                         
+                     if selected_file:
                          results.append({
-                             "url": files[0]["link"],
+                             "url": selected_file["link"],
                              "credit": vid["user"]["name"],
                              "source": "Pexels"
                          })
@@ -140,7 +171,11 @@ async def fetch_destination_images(query: str, per_page: int = 3) -> List[Dict[s
     if images: return images
     
     # 3. Fallback to Pixabay
-    return await fetch_from_pixabay(query, type="photo", per_page=per_page)
+    pixabay_results = await fetch_from_pixabay(query, type="photo", per_page=per_page)
+    if pixabay_results: return pixabay_results
+
+    # 4. Ultimate Fallback: Static Images
+    return [random.choice(STATIC_FALLBACK_IMAGES)]
 
 async def fetch_destination_videos(query: str, per_page: int = 3) -> List[Dict[str, str]]:
     """Aggregated Video Fetcher: Pexels -> Pixabay"""
@@ -149,4 +184,8 @@ async def fetch_destination_videos(query: str, per_page: int = 3) -> List[Dict[s
     if videos: return videos
     
     # 2. Fallback to Pixabay
-    return await fetch_from_pixabay(query, type="video", per_page=per_page)
+    pixabay_results = await fetch_from_pixabay(query, type="video", per_page=per_page)
+    if pixabay_results: return pixabay_results
+
+    # 3. Ultimate Fallback: Static Videos
+    return [random.choice(STATIC_FALLBACK_VIDEOS)]

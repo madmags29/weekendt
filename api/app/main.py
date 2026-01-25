@@ -1,7 +1,13 @@
 from dotenv import load_dotenv
 import os
+from pathlib import Path
 
-load_dotenv()
+# Get the backend directory path
+backend_dir = Path(__file__).resolve().parent.parent
+env_path = backend_dir / '.env'
+
+# Load environment variables from .env file
+load_dotenv(dotenv_path=env_path)
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -13,6 +19,10 @@ app = FastAPI(title="Weekend Traveller AI Search Engine")
 origins = [
     "http://localhost:3000",
     "http://localhost:3001",
+    "https://weekendtravellers.com",
+    "http://weekendtravellers.com",
+    "https://api.weekendtravellers.com",
+    "http://api.weekendtravellers.com",
 ]
 
 app.add_middleware(
@@ -38,12 +48,12 @@ async def get_background_videos():
     try:
         videos = await fetch_destination_videos("India monuments mountains nature green cinematic", per_page=40)
         if not videos:
-            # Fallback
-            return ["https://cdn.pixabay.com/video/2020/01/05/30902-383794165_large.mp4"]
+            # Fallback to a working HD video URL
+            return [{"url": "https://videos.pexels.com/video-files/855018/855018-hd_1920_1080_30fps.mp4", "credit": "Pexels", "source": "Pexels"}]
         return videos
     except Exception as e:
         print(f"Error fetching background videos: {e}")
-        return ["https://cdn.pixabay.com/video/2020/01/05/30902-383794165_large.mp4"]
+        return [{"url": "https://videos.pexels.com/video-files/855018/855018-hd_1920_1080_30fps.mp4", "credit": "Pexels", "source": "Pexels"}]
 
 from app.services.ai_service import get_recommendations
 from app.schemas import RecommendationResponse

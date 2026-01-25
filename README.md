@@ -25,22 +25,7 @@ Visit `http://localhost:3000`
 
 ## 📦 Deployment
 
-### CPanel Shared Hosting
-
-See **[CPANEL_DEPLOYMENT.md](./CPANEL_DEPLOYMENT.md)** for complete deployment guide.
-
-**Quick Deploy:**
-```bash
-./build-cpanel.sh
-```
-
-This creates:
-- `frontend_bundle.zip` → Upload to `public_html/`
-- `backend_bundle.zip` → Upload to app root
-
-See **[CPANEL_QUICK_REF.md](./CPANEL_QUICK_REF.md)** for quick reference.
-
-### Vercel (Alternative)
+### Vercel (Recommended)
 
 ```bash
 npx vercel deploy --prod
@@ -83,20 +68,13 @@ weekend-t/
 │   │   └── services/     # Business logic
 │   └── requirements.txt
 ├── public/               # Static assets
-├── passenger_wsgi.py     # CPanel WSGI entry
-└── build-cpanel.sh       # CPanel build script
 ```
 
 ## 🔧 Build Scripts
 
 - `npm run dev` - Start development server
 - `npm run build` - Build for production (static export)
-- `./build-cpanel.sh` - Build and package for cPanel
-
-## 📖 Documentation
-
-- [CPanel Deployment Guide](./CPANEL_DEPLOYMENT.md)
-- [CPanel Quick Reference](./CPANEL_QUICK_REF.md)
+- [Vercel Deployment Guide](./VERCEL_DEPLOY.md)
 
 ## 🌐 Production URLs
 
