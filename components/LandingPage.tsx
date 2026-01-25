@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { Search, ArrowRight, Menu, X, Home, History, Settings, Info } from "lucide-react";
+import { Search, ArrowRight, Menu, X, Home, History, Settings, Info, Instagram, Youtube } from "lucide-react";
 import { useTheme } from "./ThemeProvider";
 import Logo from "./Logo";
 
@@ -175,6 +175,24 @@ export default function LandingPage({ onSearch }: LandingPageProps) {
                     </div>
 
                     <div className="mt-auto pt-6 border-t border-gray-200 dark:border-white/5">
+                        <div className="flex items-center gap-4 mb-4">
+                            <a
+                                href="https://instagram.com/weekendtravellers.offical"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-zinc-600 dark:text-zinc-400 hover:text-pink-600 dark:hover:text-pink-500 transition-colors"
+                            >
+                                <Instagram className="w-5 h-5" />
+                            </a>
+                            <a
+                                href="https://youtube.com/weekendtravellers.offical"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-zinc-600 dark:text-zinc-400 hover:text-red-600 dark:hover:text-red-500 transition-colors"
+                            >
+                                <Youtube className="w-5 h-5" />
+                            </a>
+                        </div>
                         <p className="text-xs text-zinc-500">WeekendTraveller v1.0</p>
                     </div>
                 </div>
