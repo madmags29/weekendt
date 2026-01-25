@@ -1,6 +1,6 @@
 # Weekend Travellers - CPanel Shared Hosting Deployment Guide
 
-Complete guide for deploying the Weekend Travellers application to cPanel shared hosting at `/home/devde143/repositories/weekendtravellers.com`.
+Complete guide for deploying the Weekend Travellers application to cPanel shared hosting at `/home2/aceda53n/weekendtravellers.com`.
 
 ## 📋 Prerequisites
 
@@ -19,7 +19,7 @@ The application consists of two parts:
 ### Directory Structure on Server
 
 ```
-/home/devde143/repositories/weekendtravellers.com/
+/home2/aceda53n/weekendtravellers.com/
 ├── public_html/              # Frontend static files
 │   ├── _next/
 │   ├── index.html
@@ -66,12 +66,12 @@ This creates two files:
 
 ### Step 3: Upload Backend to Server
 
-1. In cPanel File Manager, navigate to `/home/devde143/repositories/weekendtravellers.com/`
+1. In cPanel File Manager, navigate to `/home2/aceda53n/weekendtravellers.com/`
 2. Upload `backend_bundle.zip`
 3. Extract the zip file
 4. Verify the following structure exists:
    ```
-   /home/devde143/repositories/weekendtravellers.com/
+   /home2/aceda53n/weekendtravellers.com/
    ├── backend/
    ├── passenger_wsgi.py
    ```
@@ -80,10 +80,10 @@ This creates two files:
 
 ```bash
 # SSH into your server
-ssh devde143@weekendtravellers.com
+ssh aceda53n@weekendtravellers.com
 
 # Navigate to project directory
-cd /home/devde143/repositories/weekendtravellers.com
+cd /home2/aceda53n/weekendtravellers.com
 
 # Create Python virtual environment
 cd backend
@@ -119,7 +119,7 @@ NEXT_PUBLIC_GOOGLE_ADSENSE_ID=ca-pub-XXXXXXXXXXXXXXXX
 2. Click **"Create Application"**
 3. Configure as follows:
    - **Python Version**: 3.9 or higher
-   - **Application Root**: `/home/devde143/repositories/weekendtravellers.com`
+   - **Application Root**: `/home2/aceda53n/weekendtravellers.com`
    - **Application URL**: `/api` (or configure subdomain)
    - **Application Startup File**: `passenger_wsgi.py`
    - **Application Entry Point**: `application`
@@ -154,7 +154,7 @@ Create a subdomain `api.weekendtravellers.com` and point it to the Python applic
 
 ```bash
 # Via SSH
-cd /home/devde143/repositories/weekendtravellers.com
+cd /home2/aceda53n/weekendtravellers.com
 mkdir -p tmp
 touch tmp/restart.txt
 ```
@@ -209,7 +209,7 @@ You should see:
 **Problem**: "Module not found" errors
 - **Solution**: 
   ```bash
-  cd /home/devde143/repositories/weekendtravellers.com/backend
+  cd /home2/aceda53n/weekendtravellers.com/backend
   source venv/bin/activate
   pip install -r requirements.txt
   touch ../tmp/restart.txt
@@ -248,8 +248,8 @@ zip -r backend_update.zip backend/app
 
 # Upload to server and extract
 # Then restart via SSH:
-ssh devde143@weekendtravellers.com
-cd /home/devde143/repositories/weekendtravellers.com
+ssh aceda53n@weekendtravellers.com
+cd /home2/aceda53n/weekendtravellers.com
 touch tmp/restart.txt
 ```
 
@@ -299,11 +299,11 @@ If Passenger doesn't work, you can use the CGI script `api.cgi` in your public f
     RewriteRule ^api/(.*)$ api.cgi/$1 [L,QSA]
     ```
 
-4.  **Backend**: Upload `backend_bundle.zip` to `/home/devde143/repositories/weekendtravellers.com` (one level up from public_html) so the script can import it.
+4.  **Backend**: Upload `backend_bundle.zip` to `/home2/aceda53n/weekendtravellers.com` (one level up from public_html) so the script can import it.
 
 
 ---
 
-**Deployment Path**: `/home/devde143/repositories/weekendtravellers.com`  
+**Deployment Path**: `/home2/aceda53n/weekendtravellers.com`  
 **Domain**: `https://weekendtravellers.com`  
 **Last Updated**: 2026-01-24
