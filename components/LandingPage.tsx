@@ -177,7 +177,7 @@ export default function LandingPage({ onSearch }: LandingPageProps) {
                     <div className="mt-auto pt-6 border-t border-gray-200 dark:border-white/5">
                         <div className="flex items-center gap-4 mb-4">
                             <a
-                                href="https://instagram.com/weekendtravellers.offical"
+                                href="https://www.instagram.com/weekendtravellers.official"
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="text-zinc-600 dark:text-zinc-400 hover:text-pink-600 dark:hover:text-pink-500 transition-colors"
@@ -185,7 +185,7 @@ export default function LandingPage({ onSearch }: LandingPageProps) {
                                 <Instagram className="w-5 h-5" />
                             </a>
                             <a
-                                href="https://youtube.com/weekendtravellers.offical"
+                                href="https://www.youtube.com/@weekendtravellers.official"
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="text-zinc-600 dark:text-zinc-400 hover:text-red-600 dark:hover:text-red-500 transition-colors"
@@ -276,7 +276,7 @@ export default function LandingPage({ onSearch }: LandingPageProps) {
             {/* Social Media Links (Bottom Right) */}
             <div className="absolute bottom-6 left-6 z-30 flex gap-4">
                 <a
-                    href="https://instagram.com/weekendtravellers.offical"
+                    href="https://www.instagram.com/weekendtravellers.official"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="p-2 bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/10 rounded-full text-zinc-600 dark:text-white/70 hover:text-pink-600 dark:hover:text-pink-400 transition-all hover:scale-110 shadow-lg"
@@ -285,7 +285,7 @@ export default function LandingPage({ onSearch }: LandingPageProps) {
                     <Instagram className="w-5 h-5" />
                 </a>
                 <a
-                    href="https://youtube.com/weekendtravellers.offical"
+                    href="https://www.youtube.com/@weekendtravellers.official"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="p-2 bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/10 rounded-full text-zinc-600 dark:text-white/70 hover:text-red-600 dark:hover:text-red-400 transition-all hover:scale-110 shadow-lg"

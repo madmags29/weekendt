@@ -11,7 +11,8 @@ export default function StructuredData() {
         sameAs: [
             'https://twitter.com/weekendtravellers',
             'https://facebook.com/weekendtravellers',
-            'https://instagram.com/weekendtravellers',
+            'https://www.instagram.com/weekendtravellers.official',
+            'https://www.youtube.com/@weekendtravellers.official',
         ],
         contactPoint: {
             '@type': 'ContactPoint',
