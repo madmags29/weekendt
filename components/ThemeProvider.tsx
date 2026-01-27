@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useEffect, useState } from "react";
 
-type Theme = "dark" | "light";
+type Theme = "dark" | "light" | "system";
 
 interface ThemeProviderProps {
     children: React.ReactNode;
@@ -16,7 +16,7 @@ interface ThemeProviderState {
 }
 
 const initialState: ThemeProviderState = {
-    theme: "dark",
+    theme: "system",
     setTheme: () => null,
 };
 
@@ -24,27 +24,39 @@ const ThemeProviderContext = createContext<ThemeProviderState>(initialState);
 
 export function ThemeProvider({
     children,
-    defaultTheme: _defaultTheme = "dark",
-    storageKey: _storageKey = "vite-ui-theme",
+    defaultTheme = "system",
+    storageKey = "vite-ui-theme",
 }: ThemeProviderProps) {
-    const [_theme, _setTheme] = useState<Theme>("dark");
+    const [theme, setTheme] = useState<Theme>(() => {
+        if (typeof window !== "undefined") {
+            return (localStorage.getItem(storageKey) as Theme) || defaultTheme;
+        }
+        return defaultTheme;
+    });
 
     useEffect(() => {
         const root = window.document.documentElement;
         root.classList.remove("light", "dark");
-        root.classList.add("dark");
-    }, []);
+
+        if (theme === "system") {
+            const systemTheme = window.matchMedia("(prefers-color-scheme: dark)")
+                .matches
+                ? "dark"
+                : "light";
+            root.classList.add(systemTheme);
+            return;
+        }
+
+        root.classList.add(theme);
+    }, [theme]);
 
     const value = {
-        theme: "dark" as Theme,
-        setTheme: () => { },
+        theme,
+        setTheme: (theme: Theme) => {
+            localStorage.setItem(storageKey, theme);
+            setTheme(theme);
+        },
     };
-
-    // Prevent hydration mismatch by not rendering until mounted
-    // or render children but with default theme to avoid flicker
-    // For next.js strictly, we might simply render. 
-    // But to be safe with localStorage, we wait.
-    // Actually, for immediate render we can just return children but effect runs after.
 
     return (
         <ThemeProviderContext.Provider value={value}>

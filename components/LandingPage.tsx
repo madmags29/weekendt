@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Search, ArrowRight, Menu, X, Home, History, Settings, Info, Instagram, Youtube } from "lucide-react";
 import { useTheme } from "./ThemeProvider";
+import { ThemeToggle } from "./ThemeToggle";
 import Logo from "./Logo";
 
 interface LandingPageProps {
@@ -198,13 +199,18 @@ export default function LandingPage({ onSearch }: LandingPageProps) {
                 </div>
             </div>
 
-            {/* Menu Toggle Button (Visible when menu is closed) */}
+            {/* Top Left Menu */}
             <button
                 onClick={() => setShowMenu(true)}
                 className={`absolute top-6 left-6 z-30 p-3 bg-white/20 dark:bg-black/20 hover:bg-white/40 dark:hover:bg-black/40 backdrop-blur-md border border-white/20 dark:border-white/10 rounded-full text-zinc-900 dark:text-white transition-all hover:scale-105 ${showMenu ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
             >
                 <Menu className="w-6 h-6" />
             </button>
+
+            {/* Top Right Theme Toggle */}
+            <div className={`absolute top-6 right-6 z-30 ${showMenu ? 'opacity-0 pointer-events-none' : 'opacity-100'} transition-opacity duration-300`}>
+                <ThemeToggle />
+            </div>
 
             {/* Content Centered */}
             <div className="relative z-10 flex flex-col items-center justify-center h-full px-4 text-center">
@@ -216,10 +222,10 @@ export default function LandingPage({ onSearch }: LandingPageProps) {
 
                 {/* Hero Text */}
                 <h1 className="text-3xl sm:text-5xl md:text-7xl font-bold tracking-tight mb-2 drop-shadow-2xl bg-clip-text text-transparent bg-gradient-to-b from-zinc-800 to-zinc-500 dark:from-white dark:to-white/70 px-2 transition-colors duration-500">
-                    Weekend Travellers
+                    Weekend Trip Planner India
                 </h1>
                 <p className="text-base sm:text-lg md:text-xl text-zinc-600 dark:text-zinc-100 mb-6 md:mb-12 font-light tracking-wide drop-shadow-md px-4 transition-colors duration-500">
-                    Discover India&apos;s hidden gems with AI.
+                    Discover India&apos;s best weekend getaways with AI.
                 </p>
 
                 {/* Search Bar */}

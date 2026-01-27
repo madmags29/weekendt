@@ -7,6 +7,8 @@ import ChatMessage from "./ChatMessage";
 import ThinkingIndicator from "./ThinkingIndicator";
 import { TripPlan, SearchRequest } from "../types";
 import { useTheme } from "./ThemeProvider";
+import Link from "next/link";
+import { ThemeToggle } from "./ThemeToggle";
 import Logo from "./Logo";
 
 // Dynamic import for MapArea to avoid SSR issues with Leaflet
@@ -255,7 +257,7 @@ export default function ChatLayout({ initialQuery, initialTripId, onBack }: Chat
                     </div>
 
                     <div className="flex items-center gap-2">
-
+                        <ThemeToggle />
                         <button className="md:hidden p-2 text-zinc-400 hover:text-white transition-colors">
                             <MapIcon className="w-5 h-5" />
                         </button>

@@ -20,11 +20,11 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL('https://weekendtravellers.com'),
   title: {
-    default: 'Weekend Travellers - AI-Powered Weekend Trip Planner for India',
+    default: 'Weekend Trip Planner India | AI Itineraries & Getaways - Weekend Travellers',
     template: '%s | Weekend Travellers'
   },
-  description: 'Discover perfect weekend getaways in India with AI-powered trip planning. Get personalized itineraries, hotel recommendations, and local attractions for your next adventure.',
-  keywords: ['weekend trips India', 'weekend getaways', 'AI trip planner', 'travel planner India', 'weekend travel', 'short trips India', 'weekend destinations', 'travel itinerary', 'India tourism'],
+  description: 'The #1 AI weekend trip planner for India. Discover perfect weekend getaways, plan short trips, and find hidden gems with personalized daily itineraries.',
+  keywords: ['weekend trip planner india', 'weekend getaways india', 'AI trip planner', 'short trips india', 'weekend travel', 'holiday planner', 'India tourism', 'weekend destinatinos'],
   authors: [{ name: 'Weekend Travellers' }],
   creator: 'Weekend Travellers',
   publisher: 'Weekend Travellers',
@@ -40,7 +40,7 @@ export const metadata: Metadata = {
     },
   },
   alternates: {
-    canonical: 'https://weekendtravellers.com',
+    canonical: './',
   },
   openGraph: {
     type: 'website',
@@ -97,13 +97,7 @@ export default function RootLayout({
       >
         <Preloader />
         <GoogleAnalytics />
-        <Script
-          src="https://emrld.ltd/NDkyMjE5.js?t=492219"
-          strategy="afterInteractive"
-          data-noptimize="1"
-          data-cfasync="false"
-          data-wpfc-render="false"
-        />
+
         <ThemeProvider defaultTheme="dark">
           <StructuredData />
           {children}
