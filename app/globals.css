@@ -58,6 +58,20 @@
   }
 
   --animate-shimmer: shimmer 2s linear infinite;
+
+  @keyframes float {
+
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+
+    50% {
+      transform: translateY(-6px);
+    }
+  }
+
+  --animate-float: float 4s ease-in-out infinite;
 }
 
 .glass-panel {
