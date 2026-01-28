@@ -1,3 +1,4 @@
+import ShareButton from "./ShareButton";
 import { TripPlan } from "../types";
 import { MapPin, Clock, IndianRupee, Navigation } from "lucide-react";
 import TypewriterText from "./TypewriterText";
@@ -31,7 +32,7 @@ export default function TripResult({ plan }: TripResultProps) {
                         />
                     )}
 
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-transparent to-black/80" />
 
                     <div className="z-10 text-center">
                         <h2 className="text-5xl font-bold text-white mb-2 tracking-tight drop-shadow-md">{plan.destination}</h2>
@@ -39,6 +40,14 @@ export default function TripResult({ plan }: TripResultProps) {
                             <MapPin className="w-4 h-4" />
                             <span className="text-sm font-medium tracking-wide uppercase">Explore</span>
                         </div>
+                    </div>
+
+                    {/* Share Button */}
+                    <div className="absolute top-4 right-4 z-20">
+                        <ShareButton
+                            title={`Trip to ${plan.destination}`}
+                            text={`Check out this weekend trip plan to ${plan.destination}!\n\nBest Time: ${plan.best_time_to_visit}\nBudget: ${plan.estimated_budget}\nDuration: ${plan.route_info.duration}`}
+                        />
                     </div>
                 </div>
 
@@ -89,9 +98,6 @@ export default function TripResult({ plan }: TripResultProps) {
                                 <h4 className="text-xl font-semibold mb-4 text-purple-700">Day {day.day}</h4>
                                 <div className="space-y-4">
                                     {day.activities.map((activity, idx) => {
-                                        // Calculate a staggered delay: (Day Index * 3 + Activity Index) * 1000
-                                        // But we don't have day index here nicely without prop drilling or mapping index
-                                        // Let's use a simpler heuristics or just map index
                                         const globalIndex = (day.day - 1) * 3 + idx;
                                         return (
                                             <div key={idx} className="bg-gray-50 p-5 rounded-2xl hover:bg-gray-100 transition-all duration-300 group border border-transparent hover:border-gray-200 shadow-sm border-gray-100">
