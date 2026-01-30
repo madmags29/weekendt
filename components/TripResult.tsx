@@ -87,6 +87,53 @@ export default function TripResult({ plan }: TripResultProps) {
                         </div>
                     </div>
 
+                    {plan.destination_info && plan.destination_info.top_attractions && plan.destination_info.top_attractions.length > 0 && (
+                        <div className="mb-8">
+                            <h3 className="text-2xl font-bold mb-6 text-gray-900">Don't Miss</h3>
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                                {plan.destination_info.top_attractions.map((attraction, idx) => (
+                                    <div key={idx} className="bg-white rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-all overflow-hidden group">
+                                        {attraction.image_url && (
+                                            <div className="h-48 overflow-hidden bg-gray-100 relative">
+                                                <img
+                                                    src={attraction.image_url}
+                                                    alt={attraction.name}
+                                                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                                                />
+                                                {attraction.media_credit && (
+                                                    <div className="absolute bottom-0 right-0 bg-black/50 text-white text-[10px] px-2 py-1 truncate max-w-full">
+                                                        {attraction.media_credit}
+                                                    </div>
+                                                )}
+                                            </div>
+                                        )}
+                                        <div className="p-5">
+                                            <h4 className="font-bold text-gray-800 mb-2 text-lg">{attraction.name}</h4>
+                                            <p className="text-sm text-gray-600 line-clamp-3 leading-relaxed">{attraction.description}</p>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    )}
+
+                    {plan.hotels && plan.hotels.length > 0 && (
+                        <div className="mb-8">
+                            <h3 className="text-2xl font-bold mb-6 text-gray-900">Where to Stay</h3>
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                                {plan.hotels.map((hotel, idx) => (
+                                    <div key={idx} className="bg-white p-5 rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-all">
+                                        <h4 className="font-bold text-gray-800 mb-2">{hotel.name}</h4>
+                                        <p className="text-xs font-bold text-green-600 bg-green-50 inline-block px-2 py-1 rounded-md mb-3">
+                                            {hotel.price_range}
+                                        </p>
+                                        <p className="text-sm text-gray-600 line-clamp-3">{hotel.description}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    )}
+
                     <hr className="border-gray-200 my-8" />
 
                     {/* Itinerary */}

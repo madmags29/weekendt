@@ -39,11 +39,13 @@ export interface Attraction {
     name: string;
     description: string;
     coordinates?: { lat: number; lng: number };
+    image_url?: string;
+    media_credit?: string;
 }
 
 export interface OriginInfo {
-    city_name: string;
-    description: string;
+    city_name?: string;
+    description?: string;
     top_attractions?: Attraction[];
     hotels?: Hotel[];
     image_url?: string;

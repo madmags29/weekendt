@@ -41,10 +41,12 @@ class Attraction(BaseModel):
     name: str
     description: str
     coordinates: Optional[Coordinates] = None
+    image_url: Optional[str] = None
+    media_credit: Optional[str] = None
 
 class OriginInfo(BaseModel):
-    city_name: str
-    description: str
+    city_name: Optional[str] = None
+    description: Optional[str] = None
     top_attractions: Optional[List[Attraction]] = None
     hotels: Optional[List[Hotel]] = None
     image_url: Optional[str] = None
@@ -58,6 +60,7 @@ class TripPlan(BaseModel):
     itinerary: List[DayPlan]
     hotels: Optional[List[Hotel]] = None
     origin_info: Optional[OriginInfo] = None
+    destination_info: Optional[OriginInfo] = None
     hero_image: Optional[str] = None
     hero_video: Optional[str] = None
     media_credit: Optional[str] = None # For Hero Image

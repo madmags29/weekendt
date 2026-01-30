@@ -34,12 +34,16 @@ async def generate_trip_plan(request: SearchRequest) -> TripPlan:
        - A 400+ character description of the origin city
        - `top_attractions`: 3-4 must-visit places in the origin city with descriptions (200+ chars each) and coordinates
        - `hotels`: 2-3 recommended hotels in the origin city with the same format as destination hotels
-    5. You MUST provide valid GPS coordinates (lat/lng) for:
+    5. Provide `destination_info` with:
+       - `city_name`: Name of the destination
+       - `description`: A 400+ character description of the destination
+       - `top_attractions`: 3-4 MUST-VISIT top attractions at the destination. These should be distinct from the daily itinerary activities if possible, or the absolute highlights. Include description (200+ chars) and coordinates.
+    6. You MUST provide valid GPS coordinates (lat/lng) for:
        - The main destination
        - The ORIGIN city (as 'origin_coordinates')
        - EVERY sightseeing activity
        - EVERY hotel (both destination and origin)
-       - EVERY attraction in origin_info
+       - EVERY attraction in origin_info and destination_info
     
     Ensure the response is strictly in the simplified JSON format required.
     """
@@ -91,9 +95,7 @@ async def generate_trip_plan(request: SearchRequest) -> TripPlan:
                         activity.image_url = activity_images[0]["url"]
                         activity.media_credit = f"Photo by {activity_images[0]['credit']}"
                     else:
-                        # Fallback: Try searching just the destination if specific activity fails? 
-                        # Or maybe just the activity name without destination?
-                        # Let's try just the activity name as a fallback if it's long enough
+                        # Fallback
                         if len(clean_activity) > 5:
                              activity_images = await fetch_destination_images(clean_activity, per_page=3)
                              if activity_images:
@@ -103,6 +105,21 @@ async def generate_trip_plan(request: SearchRequest) -> TripPlan:
                 except Exception as e:
                     print(f"WARNING: Failed to fetch image for activity {activity.activity}: {e}")
                     continue
+
+        # Fetch Destination Top Attractions Images
+        if trip_plan.destination_info and trip_plan.destination_info.top_attractions:
+            for attraction in trip_plan.destination_info.top_attractions:
+                try:
+                    query = f"{trip_plan.destination} {attraction.name}"
+                    attr_images = await fetch_destination_images(query, per_page=1)
+                    if not attr_images:
+                         attr_images = await fetch_destination_images(attraction.name, per_page=1)
+                    
+                    if attr_images:
+                        attraction.image_url = attr_images[0]["url"]
+                        attraction.media_credit = f"Photo by {attr_images[0]['credit']}"
+                except Exception as e:
+                    print(f"WARNING: Failed to fetch image for top attraction {attraction.name}: {e}")
 
         # Fetch Origin City Image
         if trip_plan.origin_coordinates:

@@ -23,6 +23,7 @@ origins = [
     "http://weekendtravellers.com",
     "https://api.weekendtravellers.com",
     "http://api.weekendtravellers.com",
+    "http://localhost:3005",
 ]
 
 app.add_middleware(
