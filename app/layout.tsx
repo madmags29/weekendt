@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import AnalyticsProvider from "@/components/AnalyticsProvider";
 import StructuredData from "@/components/StructuredData";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
 import Preloader from "@/components/Preloader";
@@ -96,13 +97,12 @@ export default function RootLayout({
         suppressHydrationWarning
       >
         <Preloader />
-        <GoogleAnalytics />
-
         <ThemeProvider defaultTheme="dark">
+          <AnalyticsProvider />
           <StructuredData />
+          <GoogleAnalytics />
           {children}
         </ThemeProvider>
-
       </body>
     </html>
   );

@@ -2,6 +2,7 @@
 
 import { Share2, Check, Copy } from "lucide-react";
 import { useState } from "react";
+import { trackEvent } from "@/lib/analytics";
 
 interface ShareButtonProps {
     title: string;
@@ -21,10 +22,11 @@ export default function ShareButton({ title, text, url, className = "" }: ShareB
             url: shareUrl,
         };
 
-        // Try native share
+        // Check for Web Share API support
         if (navigator.share) {
             try {
                 await navigator.share(shareData);
+                trackEvent("share_trip", { method: "native", title: title });
                 return;
             } catch (err) {
                 console.log("Error sharing:", err);
@@ -35,6 +37,7 @@ export default function ShareButton({ title, text, url, className = "" }: ShareB
         try {
             await navigator.clipboard.writeText(`${title}\n${text}\n${shareUrl}`);
             setCopied(true);
+            trackEvent("share_trip", { method: "clipboard", title: title });
             setTimeout(() => setCopied(false), 2000);
         } catch (err) {
             console.error("Failed to copy:", err);

@@ -39,6 +39,8 @@ def read_root():
     return {"message": "Welcome to Weekend Traveller AI Search Engine API"}
 
 app.include_router(search.router)
+from app.routers import analytics
+app.include_router(analytics.router)
 
 from app.services.media_service import fetch_destination_videos
 

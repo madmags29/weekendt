@@ -47,3 +47,8 @@ out/
 
 # Virtual environment
 venv/
+
+# sqlite databases
+*.db
+*.db-shm
+*.db-wal

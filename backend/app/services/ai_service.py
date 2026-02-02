@@ -49,6 +49,21 @@ async def generate_trip_plan(request: SearchRequest) -> TripPlan:
     """
 
     print(f"DEBUG: Generating plan for {request.destination}...")
+    
+    # Log Search for Analytics
+    from app.services.analytics_service import log_search_to_db
+    try:
+        # User agent is not passed in request currently, we might need to pass it or just log generic
+        # Ideally we pass Request object to get user-agent, but for now we log with 'Backend' or empty.
+        await log_search_to_db(
+            query=request.query, 
+            origin=request.origin, 
+            destination=request.destination or "Unknown",
+            user_agent="AI_Service"
+        )
+    except Exception as e:
+        print(f"Analytics logging failed: {e}")
+
     try:
         completion = await client.beta.chat.completions.parse(
             model="gpt-4o-2024-08-06",

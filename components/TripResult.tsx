@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import ShareButton from "./ShareButton";
 import { TripPlan } from "../types";
 import { MapPin, Clock, IndianRupee, Navigation } from "lucide-react";
@@ -9,8 +10,49 @@ interface TripResultProps {
 }
 
 export default function TripResult({ plan }: TripResultProps) {
+    useEffect(() => {
+        if (plan.destination) {
+            document.title = `Trip to ${plan.destination} | Weekend Travellers`;
+
+            // Update meta description safely
+            let metaDesc = document.querySelector('meta[name="description"]');
+            if (!metaDesc) {
+                metaDesc = document.createElement('meta');
+                metaDesc.setAttribute('name', 'description');
+                document.head.appendChild(metaDesc);
+            }
+            metaDesc.setAttribute("content", `Plan your perfect weekend trip to ${plan.destination}. Complete itinerary, budget estimate: ${plan.estimated_budget}, best time: ${plan.best_time_to_visit}. AI-powered travel planning.`);
+        }
+    }, [plan]);
+
+    const jsonLd = {
+        "@context": "https://schema.org",
+        "@type": "TouristTrip",
+        "name": `Weekend Trip to ${plan.destination}`,
+        "description": `Comprehensive trip plan to ${plan.destination}. Includes itinerary, hotels, and budget estimates.`,
+        "provider": {
+            "@type": "Organization",
+            "name": "Weekend Travellers",
+            "url": "https://weekendtravellers.com"
+        },
+        "itinerary": plan.itinerary.map(day => ({
+            "@type": "ItemList",
+            "name": `Day ${day.day}`,
+            "itemListElement": day.activities.map((act, idx) => ({
+                "@type": "TouristAttraction",
+                "position": idx + 1,
+                "name": act.activity,
+                "description": act.description
+            }))
+        }))
+    };
+
     return (
         <div className="w-full max-w-4xl mx-auto p-6 animate-in fade-in slide-in-from-bottom-10 duration-700">
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+            />
             <div className="bg-white/95 backdrop-blur-xl rounded-3xl overflow-hidden shadow-2xl border border-gray-200">
 
                 {/* Header Image / Map Placeholder */}
