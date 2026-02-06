@@ -1,24 +1,9 @@
-from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
-from mangum import Mangum
-import os
+from http.server import BaseHTTPRequestHandler
+import json
 
-app = FastAPI()
-
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-
-@app.get("/api/health")
-def health_check():
-    return {"status": "ok", "mode": "minimal"}
-
-@app.get("/")
-def read_root():
-    return {"message": "Weekend Traveller API - Minimal"}
-
-handler = Mangum(app)
+class handler(BaseHTTPRequestHandler):
+    def do_GET(self):
+        self.send_response(200)
+        self.send_header('Content-type', 'application/json')
+        self.end_headers()
+        self.wfile.write(json.dumps({"status": "ok", "mode": "raw_http"}).encode('utf-8'))
