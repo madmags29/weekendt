@@ -5,4 +5,4 @@ openai
 httpx
 pydantic
 mangum
-mangum
+
