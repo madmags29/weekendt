@@ -11,9 +11,19 @@ load_dotenv(dotenv_path=env_path)
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from app.routers import search
+from app.routers import search, trips
+from app.config.database import connect_to_mongo, close_mongo_connection
 
 app = FastAPI(title="Weekend Traveller AI Search Engine")
+
+# MongoDB connection lifecycle
+@app.on_event("startup")
+async def startup_db_client():
+    await connect_to_mongo()
+
+@app.on_event("shutdown")
+async def shutdown_db_client():
+    await close_mongo_connection()
 
 # CORS configuration
 origins = [
@@ -41,6 +51,7 @@ def read_root():
 app.include_router(search.router)
 from app.routers import analytics
 app.include_router(analytics.router)
+app.include_router(trips.router)
 
 from app.services.media_service import fetch_destination_videos
 
