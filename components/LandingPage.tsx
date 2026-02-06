@@ -119,6 +119,8 @@ export default function LandingPage({ onSearch }: LandingPageProps) {
                         muted
                         loop
                         playsInline
+                        disablePictureInPicture
+                        disableRemotePlayback
                         className="w-full h-full object-cover opacity-30 transition-opacity duration-500"
                     >
                         <source src={videoData.url} type="video/mp4" />
