@@ -1,12 +1,4 @@
-from dotenv import load_dotenv
 import os
-from pathlib import Path
-
-# Load environment variables
-api_dir = Path(__file__).resolve().parent
-env_path = api_dir / '.env'
-load_dotenv(dotenv_path=env_path)
-
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from mangum import Mangum
