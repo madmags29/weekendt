@@ -18,10 +18,10 @@ from app.services.media_service import fetch_destination_videos
 from app.services.ai_service import get_recommendations
 
 # Initialize FastAPI app with a distinct name to avoid shadowing the 'app' package
-fastapi_app = FastAPI()
+app = FastAPI()
 
 # CORS
-fastapi_app.add_middleware(
+app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
     allow_credentials=True,
@@ -29,7 +29,7 @@ fastapi_app.add_middleware(
     allow_headers=["*"],
 )
 
-@fastapi_app.get("/api/debug-vars")
+@app.get("/api/debug-vars")
 def debug_vars(request: Request):
     return {
         "headers": dict(request.headers),
@@ -40,7 +40,7 @@ def debug_vars(request: Request):
         "client_host": request.client.host if request.client else None
     }
 
-@fastapi_app.get("/background-videos")
+@app.get("/background-videos")
 async def get_background_videos():
     """Fetch cinematic background videos for the landing page."""
     # We fetch a large pool and let the frontend randomise
@@ -54,27 +54,27 @@ async def get_background_videos():
         print(f"Error fetching background videos: {e}")
         return ["https://cdn.pixabay.com/video/2020/01/05/30902-383794165_large.mp4"]
 
-@fastapi_app.get("/recommendations", response_model=RecommendationResponse)
+@app.get("/recommendations", response_model=RecommendationResponse)
 async def fetch_recommendations(lat: float, lng: float):
     """Get AI recommendations based on user location."""
     return await get_recommendations(lat, lng)
 
 # Mount these endpoints with /api prefix as well for robust routing
-fastapi_app.include_router(search.router, prefix="/api")
+app.include_router(search.router, prefix="/api")
 
 # Also mount without prefix for local testing or direct lambda invocation
-fastapi_app.include_router(search.router)
+app.include_router(search.router)
 
 # Special handling for explicit routes to also work under /api prefix manually if needed
-@fastapi_app.get("/api/background-videos")
+@app.get("/api/background-videos")
 async def get_background_videos_api():
     return await get_background_videos()
 
-@fastapi_app.get("/api/recommendations", response_model=RecommendationResponse)
+@app.get("/api/recommendations", response_model=RecommendationResponse)
 async def fetch_recommendations_api(lat: float, lng: float):
     return await get_recommendations(lat, lng)
 
-@fastapi_app.get("/api/health")
+@app.get("/api/health")
 def health_check():
     return {
         "status": "ok", 
@@ -83,9 +83,9 @@ def health_check():
         "pixabay_check": "PIXABAY_API_KEY" in os.environ
     }
 
-@fastapi_app.get("/")
+@app.get("/")
 def read_root():
     return {"message": "Weekend Traveller API"}
 
 # Mangum Handler
-handler = Mangum(fastapi_app)
+handler = Mangum(app)
