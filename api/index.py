@@ -44,7 +44,7 @@ async def get_background_videos():
     """Fetch cinematic background videos for the landing page."""
     # We fetch a large pool and let the frontend randomise
     try:
-        videos = await fetch_destination_videos("India monuments mountains nature green cinematic", per_page=40)
+        videos = await fetch_destination_videos("Travel wanderlust nature cinematic", per_page=40)
         if not videos:
             # Fallback
             return ["https://cdn.pixabay.com/video/2020/01/05/30902-383794165_large.mp4"]
@@ -77,7 +77,11 @@ async def fetch_recommendations_api(lat: float, lng: float):
 
 @app.get("/api/health")
 def health_check():
-    return {"status": "ok", "env_check": "OPENAI_API_KEY" in os.environ}
+    return {
+        "status": "ok", 
+        "openai_check": "OPENAI_API_KEY" in os.environ,
+        "pexels_check": "PEXELS_API_KEY" in os.environ
+    }
 
 @app.get("/")
 def read_root():
