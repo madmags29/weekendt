@@ -9,7 +9,7 @@ load_dotenv(os.path.join(os.path.dirname(os.path.abspath(__file__)), '.env'))
 
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
-from app.routers import search, analytics
+from app.routers import search # , analytics
 
 app = FastAPI()
 
@@ -36,7 +36,7 @@ def debug_vars(request: Request):
 
 # Mount api router
 from app.schemas import RecommendationResponse
-from app.services.media_service import fetch_destination_videos
+from app.services.media_service import fetch_destination_images
 from app.services.ai_service import get_recommendations
 
 @app.get("/background-videos")
@@ -60,7 +60,7 @@ async def fetch_recommendations(lat: float, lng: float):
 
 # Mount these endpoints with /api prefix as well for robust routing
 app.include_router(search.router, prefix="/api")
-app.include_router(analytics.router, prefix="/api")
+# app.include_router(analytics.router, prefix="/api") 
 
 # Also mount without prefix for local testing or direct lambda invocation
 app.include_router(search.router)
