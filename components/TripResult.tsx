@@ -109,7 +109,7 @@ export default function TripResult({ plan }: TripResultProps) {
                         <div className="bg-green-50 p-4 rounded-xl border border-green-100 shadow-sm">
                             <div className="flex items-center gap-3 mb-2">
                                 <div className="p-2 bg-green-500 rounded-lg text-white font-bold text-lg w-10 h-10 flex items-center justify-center">
-                                    {trip.plan.currency_symbol || '$'}
+                                    {plan.currency_symbol || '$'}
                                 </div>
                                 <h3 className="font-semibold text-green-900">Budget</h3>
                             </div>
