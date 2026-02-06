@@ -9,6 +9,7 @@ import { TripPlan, SearchRequest } from "../types";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Logo from "./Logo";
+import { trackTripGeneration } from "@/lib/analytics";
 
 // Dynamic import for MapArea to avoid SSR issues with Leaflet
 const MapArea = dynamic(() => import("./MapArea"), {
@@ -162,6 +163,9 @@ export default function ChatLayout({ initialQuery, initialTripId, onBack }: Chat
 
             const data: TripPlan = await response.json();
             setCurrentPlan(data);
+
+            // Track successful trip generation in Google Analytics
+            trackTripGeneration(data.destination);
 
             // Auto-save REMOVED. Now manual via button.
 

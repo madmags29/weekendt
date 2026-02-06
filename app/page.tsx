@@ -1,15 +1,18 @@
 "use client";
 
 import { useState, Suspense } from "react";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 import ChatLayout from "../components/ChatLayout";
 import LandingPage from "../components/LandingPage";
+import { trackSearch } from "@/lib/analytics";
 
 function HomeContent() {
+  const router = useRouter();
+
   const handleSearch = (query: string) => {
-    // This will be handled by LandingPage navigation, 
-    // but just in case we need a fallback or side effect.
     console.log("Searching for:", query);
+    trackSearch(query); // Track search in Google Analytics
+    router.push(`/trip?id=new&query=${encodeURIComponent(query)}`);
   };
 
   return <LandingPage onSearch={handleSearch} />;

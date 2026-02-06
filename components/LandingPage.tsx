@@ -33,7 +33,7 @@ export default function LandingPage({ onSearch }: LandingPageProps) {
     const [showMenu, setShowMenu] = useState(false);
 
     useEffect(() => {
-        const API_URL = process.env.NEXT_PUBLIC_API_URL || '/api';
+        const PEXELS_API_KEY = process.env.NEXT_PUBLIC_PEXELS_API_KEY;
 
         // Fallback video in case API fails
         const fallbackVideo = {
@@ -42,32 +42,47 @@ export default function LandingPage({ onSearch }: LandingPageProps) {
             source: "Google"
         };
 
-        // 1. Fetch background videos
-        fetch(`${API_URL}/background-videos`)
-            .then(res => {
-                if (!res.ok) throw new Error(`Status ${res.status}`);
-                return res.json();
-            })
-            .then(videos => {
-                if (videos && videos.length > 0) {
-                    const randomVideo = videos[Math.floor(Math.random() * videos.length)];
-                    if (typeof randomVideo === 'string') {
-                        setVideoData({ url: randomVideo, credit: "", source: "" });
-                    } else {
-                        setVideoData(randomVideo);
-                    }
-                } else {
-                    // No videos returned, use fallback
-                    setVideoData(fallbackVideo);
+        // 1. Fetch background videos directly from Pexels
+        if (PEXELS_API_KEY) {
+            fetch('https://api.pexels.com/videos/search?query=travel+nature+wanderlust&per_page=15&orientation=landscape', {
+                headers: {
+                    'Authorization': PEXELS_API_KEY
                 }
             })
-            .catch(err => {
-                console.error("Failed to fetch background videos:", err);
-                // Use fallback video on error
-                setVideoData(fallbackVideo);
-            });
+                .then(res => {
+                    if (!res.ok) throw new Error(`Pexels API Status ${res.status}`);
+                    return res.json();
+                })
+                .then(data => {
+                    if (data.videos && data.videos.length > 0) {
+                        // Pick a random video from results
+                        const randomVideo = data.videos[Math.floor(Math.random() * data.videos.length)];
+                        // Get the HD video file
+                        const videoFile = randomVideo.video_files.find((file: any) =>
+                            file.quality === 'hd' || file.quality === 'sd'
+                        ) || randomVideo.video_files[0];
+
+                        setVideoData({
+                            url: videoFile.link,
+                            credit: randomVideo.user.name,
+                            source: "Pexels"
+                        });
+                    } else {
+                        setVideoData(fallbackVideo);
+                    }
+                })
+                .catch(err => {
+                    console.error("Failed to fetch Pexels videos:", err);
+                    setVideoData(fallbackVideo);
+                });
+        } else {
+            // No API key, use fallback
+            console.warn("NEXT_PUBLIC_PEXELS_API_KEY not set, using fallback video");
+            setVideoData(fallbackVideo);
+        }
 
         // 2. Fetch User Location & Recommendations
+        const API_URL = process.env.NEXT_PUBLIC_API_URL || '/api';
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(
                 (position) => {
