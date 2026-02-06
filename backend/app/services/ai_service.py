@@ -3,7 +3,16 @@ import json
 from openai import AsyncOpenAI
 from app.schemas import SearchRequest, TripPlan, RouteInfo, DayPlan, Sightseeing
 
-client = AsyncOpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
+# Validate API key exists
+OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY")
+if not OPENAI_API_KEY:
+    raise ValueError(
+        "OPENAI_API_KEY environment variable is not set. "
+        "Please set it in your environment or .env file."
+    )
+
+client = AsyncOpenAI(api_key=OPENAI_API_KEY)
+
 
 from app.services.media_service import fetch_destination_images, fetch_destination_videos
 
