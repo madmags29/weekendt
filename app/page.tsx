@@ -6,29 +6,13 @@ import ChatLayout from "../components/ChatLayout";
 import LandingPage from "../components/LandingPage";
 
 function HomeContent() {
-  const searchParams = useSearchParams();
-  const tripId = searchParams.get('tripId');
-  const [view, setView] = useState<'landing' | 'chat'>(tripId ? 'chat' : 'landing');
-  const [initialQuery, setInitialQuery] = useState("");
-
   const handleSearch = (query: string) => {
-    setInitialQuery(query);
-    setView('chat');
+    // This will be handled by LandingPage navigation, 
+    // but just in case we need a fallback or side effect.
+    console.log("Searching for:", query);
   };
 
-  const handleBack = () => {
-    // Remove query param without reload
-    window.history.replaceState(null, '', '/');
-    setView('landing');
-    setInitialQuery("");
-  };
-
-  if (view === 'landing') {
-    return <LandingPage onSearch={handleSearch} />;
-  }
-
-  // Pass tripId to ChatLayout
-  return <ChatLayout initialQuery={initialQuery} initialTripId={tripId || undefined} onBack={handleBack} />;
+  return <LandingPage onSearch={handleSearch} />;
 }
 
 export default function Home() {

@@ -79,7 +79,7 @@ export default function MyTrips() {
                         {trips.map((trip) => (
                             <Link
                                 key={trip.id}
-                                href={`/?tripId=${trip.id}`}
+                                href={`/trip?id=${trip.id}`}
                                 className="group relative block bg-zinc-900/50 rounded-2xl overflow-hidden border border-white/10 hover:border-purple-500/50 transition-all hover:shadow-2xl hover:shadow-purple-500/10 hover:-translate-y-1"
                             >
                                 {/* Image Area */}

@@ -6,9 +6,8 @@ import { Send, Map as MapIcon, Compass, ArrowLeft } from "lucide-react";
 import ChatMessage from "./ChatMessage";
 import ThinkingIndicator from "./ThinkingIndicator";
 import { TripPlan, SearchRequest } from "../types";
-import { useTheme } from "./ThemeProvider";
 import Link from "next/link";
-import { ThemeToggle } from "./ThemeToggle";
+import { useRouter } from "next/navigation";
 import Logo from "./Logo";
 
 // Dynamic import for MapArea to avoid SSR issues with Leaflet
@@ -40,7 +39,7 @@ interface ChatLayoutProps {
 }
 
 export default function ChatLayout({ initialQuery, initialTripId, onBack }: ChatLayoutProps) {
-    const { theme, setTheme } = useTheme();
+    const router = useRouter();
     const [messages, setMessages] = useState<Message[]>([
         {
             role: "ai",
@@ -225,39 +224,41 @@ export default function ChatLayout({ initialQuery, initialTripId, onBack }: Chat
 
 
     return (
-        <div className="flex h-screen bg-gray-50 overflow-hidden font-sans selection:bg-purple-500/30 transition-colors duration-500">
+        <div className="flex h-screen bg-black overflow-hidden font-sans selection:bg-purple-500/30 transition-colors duration-500">
             {/* LEFT PANEL - CHAT */}
             <div
                 style={{ "--sidebar-width": `${sidebarWidth}px` } as React.CSSProperties}
-                className="flex flex-col h-screen bg-white/80 border-r border-gray-200 relative z-10 shadow-2xl backdrop-blur-3xl transition-all duration-300 ease-linear shrink-0 w-full md:w-[var(--sidebar-width)]"
+                className="flex flex-col h-screen bg-zinc-900/90 border-r border-zinc-800 relative z-10 shadow-2xl backdrop-blur-3xl transition-all duration-300 ease-linear shrink-0 w-full md:w-[var(--sidebar-width)]"
             >
                 {/* Drag Handle */}
                 <div
                     onMouseDown={(e) => { e.preventDefault(); setIsResizing(true); }}
                     className="absolute -right-1 top-0 bottom-0 w-2 cursor-col-resize z-50 hover:bg-purple-500/50 transition-colors group hidden md:flex items-center justify-center translate-x-1/2"
                 >
-                    <div className="w-0.5 h-8 bg-zinc-300 dark:bg-zinc-600 rounded-full group-hover:bg-purple-500 dark:group-hover:bg-white transition-colors" />
+                    <div className="w-0.5 h-8 bg-zinc-700 rounded-full group-hover:bg-purple-500 transition-colors" />
                 </div>
 
                 {/* Header */}
-                <header className="px-6 py-5 border-b border-gray-200 flex items-center justify-between sticky top-0 z-20 bg-white/90 backdrop-blur-md">
+                <header className="px-6 py-5 border-b border-zinc-800 flex items-center justify-between sticky top-0 z-20 bg-zinc-900/95 backdrop-blur-md">
                     <div className="flex items-center gap-3">
-                        {onBack && (
-                            <button onClick={onBack} className="p-2 -ml-2 hover:bg-gray-100 rounded-full transition-colors text-gray-500 hover:text-gray-900 group" title="Back to Home">
-                                <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
-                            </button>
-                        )}
+                        <button
+                            onClick={() => onBack ? onBack() : router.push('/')}
+                            className="p-2 -ml-2 text-zinc-400 hover:text-white hover:bg-white/10 rounded-full transition-colors"
+                            title="Back to Home"
+                        >
+                            <ArrowLeft className="w-5 h-5" />
+                        </button>
                         <div className="bg-gradient-to-br from-purple-500 to-indigo-600 p-2 rounded-xl shadow-lg shadow-purple-500/20">
                             <Compass className="w-5 h-5 text-white" />
                         </div>
                         <div>
-                            <h1 className="font-bold text-lg tracking-tight text-gray-900">WeekendTraveller</h1>
-                            <p className="text-[10px] text-gray-500 font-medium tracking-wider uppercase">AI Assistant</p>
+                            <h1 className="font-bold text-lg tracking-tight text-white">WeekendTraveller</h1>
+                            <p className="text-[10px] text-zinc-400 font-medium tracking-wider uppercase">AI Assistant</p>
                         </div>
                     </div>
 
                     <div className="flex items-center gap-2">
-                        <ThemeToggle />
+                        {/* ThemeToggle removed */}
                         <button className="md:hidden p-2 text-zinc-400 hover:text-white transition-colors">
                             <MapIcon className="w-5 h-5" />
                         </button>
@@ -265,7 +266,7 @@ export default function ChatLayout({ initialQuery, initialTripId, onBack }: Chat
                 </header>
 
                 {/* Message List */}
-                <div className="flex-1 overflow-y-auto px-4 py-6 scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-white/10 scrollbar-track-transparent">
+                <div className="flex-1 overflow-y-auto px-4 py-6 scrollbar-thin scrollbar-thumb-zinc-700 scrollbar-track-transparent">
                     <div className="space-y-8">
                         {messages.map((msg, idx) => (
                             <div key={idx} id={`msg-${idx}`}>
@@ -283,17 +284,17 @@ export default function ChatLayout({ initialQuery, initialTripId, onBack }: Chat
                 </div>
 
                 {/* Input Area */}
-                <div className="p-6 pt-2 pb-8 bg-gradient-to-t from-white to-transparent">
+                <div className="p-6 pt-2 pb-8 bg-gradient-to-t from-zinc-900 to-transparent">
                     <div className="relative group">
                         <div className="absolute -inset-0.5 bg-gradient-to-r from-purple-600 to-pink-600 rounded-2xl opacity-20 group-focus-within:opacity-100 transition duration-500 blur"></div>
-                        <div className="relative flex items-end bg-white backdrop-blur-xl rounded-2xl border border-gray-200 focus-within:border-purple-200 transition-all shadow-xl">
+                        <div className="relative flex items-end bg-zinc-800/80 backdrop-blur-xl rounded-2xl border border-zinc-700 focus-within:border-purple-500/50 transition-all shadow-xl">
                             <textarea
                                 value={input}
                                 onChange={(e) => setInput(e.target.value)}
                                 onKeyDown={handleKeyDown}
                                 placeholder="Where is your next adventure?"
                                 rows={2}
-                                className="flex-1 bg-transparent border-none focus:ring-0 focus:outline-none px-6 py-5 text-sm text-gray-900 placeholder-gray-400 resize-none min-h-[80px]"
+                                className="flex-1 bg-transparent border-none focus:ring-0 focus:outline-none px-6 py-5 text-sm text-white placeholder-zinc-500 resize-none min-h-[80px]"
                             />
                             <div className="p-3 pb-4">
                                 <button
@@ -306,7 +307,7 @@ export default function ChatLayout({ initialQuery, initialTripId, onBack }: Chat
                             </div>
                         </div>
                     </div>
-                    <div className="text-[10px] text-center text-gray-400 mt-4 font-medium tracking-wide space-y-1">
+                    <div className="text-[10px] text-center text-zinc-500 mt-4 font-medium tracking-wide space-y-1">
                         <p>WeekendTravellers can make mistakes. Check important info.</p>
                         <p>Powered by Weekend Travellers</p>
                     </div>
@@ -314,9 +315,9 @@ export default function ChatLayout({ initialQuery, initialTripId, onBack }: Chat
             </div>
 
             {/* RIGHT PANEL - MAP */}
-            <div className="hidden md:block flex-1 bg-gray-100 dark:bg-zinc-900 relative transition-colors duration-500">
+            <div className="hidden md:block flex-1 bg-black relative transition-colors duration-500">
                 <div className="absolute inset-0 z-0 opacity-50">
-                    <div className="absolute inset-0 bg-gradient-to-r from-gray-50 dark:from-black via-transparent to-transparent z-10 transition-colors duration-500" />
+                    <div className="absolute inset-0 bg-gradient-to-r from-black via-transparent to-transparent z-10 transition-colors duration-500" />
                 </div>
                 <MapArea plan={currentPlan} />
             </div>

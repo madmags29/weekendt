@@ -56,6 +56,8 @@ export interface TripPlan {
     destination: string;
     best_time_to_visit: string;
     estimated_budget: string;
+    currency?: string;
+    currency_symbol?: string;
     route_info: RouteInfo;
     itinerary: DayPlan[];
     hotels?: Hotel[];

@@ -56,6 +56,8 @@ class TripPlan(BaseModel):
     destination: str
     best_time_to_visit: str
     estimated_budget: str
+    currency: str = "USD"
+    currency_symbol: str = "$"
     route_info: RouteInfo
     itinerary: List[DayPlan]
     hotels: Optional[List[Hotel]] = None

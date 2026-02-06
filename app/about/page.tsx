@@ -25,7 +25,7 @@ export default function About() {
                     About Weekend Traveller
                 </h1>
                 <p className="text-xl text-zinc-300 font-light leading-relaxed max-w-2xl">
-                    We believe the best adventures are just a short drive away. Discover India&apos;s hidden gems with the power of Artificial Intelligence.
+                    We believe the best adventures are just a short drive or flight away. Discover the world&apos;s hidden gems with the power of Artificial Intelligence.
                 </p>
             </div>
 

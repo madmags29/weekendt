@@ -49,7 +49,7 @@ async def get_background_videos():
     """Fetch cinematic background videos for the landing page."""
     # We fetch a large pool and let the frontend randomise
     try:
-        videos = await fetch_destination_videos("India monuments mountains nature green cinematic", per_page=40)
+        videos = await fetch_destination_videos("Travel wanderlust nature cinematic", per_page=40)
         if not videos:
             # Fallback to a working HD video URL
             return [{"url": "https://videos.pexels.com/video-files/855018/855018-hd_1920_1080_30fps.mp4", "credit": "Pexels", "source": "Pexels"}]

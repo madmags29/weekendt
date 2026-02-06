@@ -2,7 +2,6 @@ import Script from "next/script";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { ThemeProvider } from "@/components/ThemeProvider";
 import AnalyticsProvider from "@/components/AnalyticsProvider";
 import StructuredData from "@/components/StructuredData";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
@@ -21,11 +20,11 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL('https://weekendtravellers.com'),
   title: {
-    default: 'Weekend Trip Planner India | AI Itineraries & Getaways - Weekend Travellers',
+    default: 'Weekend Trip Planner | AI Itineraries & Getaways - Weekend Travellers',
     template: '%s | Weekend Travellers'
   },
-  description: 'The #1 AI weekend trip planner for India. Discover perfect weekend getaways, plan short trips, and find hidden gems with personalized daily itineraries.',
-  keywords: ['weekend trip planner india', 'weekend getaways india', 'AI trip planner', 'short trips india', 'weekend travel', 'holiday planner', 'India tourism', 'weekend destinatinos'],
+  description: 'The #1 AI weekend trip planner. Discover perfect weekend getaways, plan short trips, and find hidden gems with personalized daily itineraries.',
+  keywords: ['weekend trip planner', 'weekend getaways', 'AI trip planner', 'short trips', 'weekend travel', 'holiday planner', 'tourism', 'weekend destinations'],
   authors: [{ name: 'Weekend Travellers' }],
   creator: 'Weekend Travellers',
   publisher: 'Weekend Travellers',
@@ -97,12 +96,10 @@ export default function RootLayout({
         suppressHydrationWarning
       >
         <Preloader />
-        <ThemeProvider defaultTheme="dark">
-          <AnalyticsProvider />
-          <StructuredData />
-          <GoogleAnalytics />
-          {children}
-        </ThemeProvider>
+        <AnalyticsProvider />
+        <StructuredData />
+        <GoogleAnalytics />
+        {children}
       </body>
     </html>
   );

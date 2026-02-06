@@ -25,6 +25,7 @@ async def generate_trip_plan(request: SearchRequest) -> TripPlan:
     Travel Mode: {request.travel_mode or 'flight'}
     
     Provide a realistic itinerary with specific activities, timings, best time to visit, estimated budget, and route info.
+    Important: Identify the local currency of the destination (e.g., 'EUR' for Paris, 'GBP' for London, 'INR' for India). Provide the `currency` code and the `currency_symbol` (e.g., '€', '£', '₹').
     
     CRITICAL REQUIREMENTS:
     1. For each 'Sightseeing' activity, provide a `description` that is AT LEAST 400 characters long (approx 5-6 sentences), offering rich historical, cultural, and practical context.
@@ -140,7 +141,7 @@ async def generate_trip_plan(request: SearchRequest) -> TripPlan:
         if trip_plan.origin_coordinates:
             try:
                 origin_city = request.origin or "Delhi"
-                origin_images = await fetch_destination_images(f"{origin_city} india travel landmarks", per_page=1)
+                origin_images = await fetch_destination_images(f"{origin_city} travel landmarks", per_page=1)
                 if origin_images and trip_plan.origin_info:
                     trip_plan.origin_info.image_url = origin_images[0]["url"]
                     trip_plan.origin_info.media_credit = f"Photo by {origin_images[0]['credit']}"
@@ -182,7 +183,7 @@ async def get_recommendations(lat: float, lng: float) -> RecommendationResponse:
         # Enrich with images
         for dest in recommendations.destinations:
             try:
-                images = await fetch_destination_images(f"{dest.name} india travel", per_page=1)
+                images = await fetch_destination_images(f"{dest.name} travel", per_page=1)
                 if images:
                     dest.image_url = images[0]["url"]
                     dest.media_credit = f"Photo by {images[0]['credit']}"

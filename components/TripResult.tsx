@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import ShareButton from "./ShareButton";
 import { TripPlan } from "../types";
-import { MapPin, Clock, IndianRupee, Navigation } from "lucide-react";
+import { MapPin, Clock, DollarSign, Navigation } from "lucide-react";
 import TypewriterText from "./TypewriterText";
 import AdSense from "./AdSense";
 
@@ -108,8 +108,8 @@ export default function TripResult({ plan }: TripResultProps) {
 
                         <div className="bg-green-50 p-4 rounded-xl border border-green-100 shadow-sm">
                             <div className="flex items-center gap-3 mb-2">
-                                <div className="p-2 bg-green-500 rounded-lg text-white">
-                                    <IndianRupee className="w-5 h-5" />
+                                <div className="p-2 bg-green-500 rounded-lg text-white font-bold text-lg w-10 h-10 flex items-center justify-center">
+                                    {trip.plan.currency_symbol || '$'}
                                 </div>
                                 <h3 className="font-semibold text-green-900">Budget</h3>
                             </div>

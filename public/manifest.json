@@ -1,7 +1,7 @@
 {
     "name": "Weekend Travellers",
     "short_name": "Weekend Travellers",
-    "description": "AI-Powered Weekend Trip Planner for India",
+    "description": "AI-Powered Weekend Trip Planner",
     "start_url": "/",
     "display": "standalone",
     "background_color": "#000000",

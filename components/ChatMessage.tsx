@@ -3,7 +3,7 @@
 import { useState } from "react";
 
 import { TripPlan, Sightseeing } from "../types";
-import { Bot, User, Clock, IndianRupee, Navigation } from "lucide-react";
+import { Bot, User, Clock, DollarSign, Navigation } from "lucide-react";
 import clsx from "clsx";
 import AdSense from "./AdSense";
 
@@ -48,12 +48,12 @@ export default function ChatMessage({ role, content, data, onSave }: ChatMessage
                     {content}
                 </div>
 
-                {/* AdSense for AI (visible during streaming/generation) */}
-                {isAi && (
+                {/* AdSense temporarily disabled for debugging */}
+                {/* {isAi && (
                     <div className="w-full max-w-2xl mt-2 p-2 bg-gray-50 rounded-lg border border-gray-200">
                         <AdSense className="w-full min-h-[90px]" format="fluid" />
                     </div>
-                )}
+                )} */}
 
                 {/* Rich Content (Trip Plan Card) */}
                 {isAi && data && (
@@ -77,20 +77,22 @@ export default function ChatMessage({ role, content, data, onSave }: ChatMessage
                         <div className="grid grid-cols-3 divide-x divide-gray-200 border-b border-gray-200 bg-gray-50/50">
                             <div className="p-4 flex flex-col items-center text-center gap-1">
                                 <Clock className="w-5 h-5 text-blue-500" />
-                                <span className="text-xs font-medium text-gray-600 leading-tight">{data.best_time_to_visit}</span>
+                                <span className="text-xs font-medium text-gray-600 leading-tight">{data.best_time_to_visit || 'N/A'}</span>
                             </div>
                             <div className="p-4 flex flex-col items-center text-center gap-1">
-                                <IndianRupee className="w-5 h-5 text-green-600" />
-                                <span className="text-xs font-medium text-gray-600 leading-tight">{data.estimated_budget.replace('$', '').replace('USD', '')}</span>
+                                <span className="text-2xl font-bold text-green-600">{data.currency_symbol || '$'}</span>
+                                <span className="text-xs font-medium text-gray-600 leading-tight">{(data.estimated_budget || '').replace('$', '').replace('USD', '') || 'N/A'}</span>
                             </div>
                             <div className="p-4 flex flex-col items-center text-center gap-1">
                                 <Navigation className="w-5 h-5 text-purple-500" />
-                                <span className="text-xs font-medium text-gray-600 leading-tight">{data.route_info.distance}</span>
+                                <span className="text-xs font-medium text-gray-600 leading-tight">{data.route_info?.distance || 'N/A'}</span>
                             </div>
                         </div>
 
+                        {/* AdSense Banner - Disabled */}
                         {/* AdSense Banner */}
                         <div className="p-4 border-b border-gray-200 bg-gray-50">
+                            <span className="text-[10px] font-semibold text-gray-400 uppercase tracking-wider mb-2 block">Sponsored</span>
                             <AdSense className="min-h-[100px] w-full" />
                         </div>
 
@@ -109,7 +111,7 @@ export default function ChatMessage({ role, content, data, onSave }: ChatMessage
                             </div>
 
                             <div className="space-y-6">
-                                {(expanded ? data.itinerary : data.itinerary.slice(0, 2)).map((day, i) => (
+                                {(expanded ? (data.itinerary || []) : (data.itinerary || []).slice(0, 2)).map((day, i) => (
                                     <div key={`${day.day}-${i}`} className="flex gap-4 group/day animate-in fade-in slide-in-from-bottom-2 duration-500">
                                         <div className="flex-col items-center hidden sm:flex pt-1">
                                             <div className="w-3 h-3 rounded-full bg-purple-500 ring-4 ring-purple-100 group-hover/day:bg-purple-600 transition-colors" />
@@ -132,7 +134,7 @@ export default function ChatMessage({ role, content, data, onSave }: ChatMessage
                                 ))}
                             </div>
 
-                            {!expanded && data.itinerary.length > 2 && (
+                            {!expanded && (data.itinerary?.length || 0) > 2 && (
                                 <div className="text-center mt-6 pt-4 border-t border-gray-100">
                                     <button
                                         onClick={() => setExpanded(true)}

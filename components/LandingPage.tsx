@@ -3,8 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Search, ArrowRight, Menu, X, Home, History, Settings, Info, Instagram, Youtube } from "lucide-react";
-import { useTheme } from "./ThemeProvider";
-import { ThemeToggle } from "./ThemeToggle";
+import { useRouter } from "next/navigation";
 import Logo from "./Logo";
 
 interface LandingPageProps {
@@ -12,18 +11,19 @@ interface LandingPageProps {
 }
 
 const DESTINATIONS = [
-    { name: "Goa", image: "https://images.pexels.com/photos/4429334/pexels-photo-4429334.jpeg?auto=compress&cs=tinysrgb&h=400", desc: "Beaches & Sun" },
-    { name: "Jaipur", image: "https://images.pexels.com/photos/3581368/pexels-photo-3581368.jpeg?auto=compress&cs=tinysrgb&h=400", desc: "The Pink City" },
-    { name: "Kerala", image: "https://images.pexels.com/photos/962464/pexels-photo-962464.jpeg?auto=compress&cs=tinysrgb&h=400", desc: "Backwaters" },
-    { name: "Manali", image: "https://images.pexels.com/photos/2583852/pexels-photo-2583852.jpeg?auto=compress&cs=tinysrgb&h=400", desc: "Mountain Calm" },
-    { name: "Ladakh", image: "https://images.pexels.com/photos/10046279/pexels-photo-10046279.jpeg?auto=compress&cs=tinysrgb&h=400", desc: "High Passes" },
+    { name: "Paris", image: "https://images.pexels.com/photos/338515/pexels-photo-338515.jpeg?auto=compress&cs=tinysrgb&h=400", desc: "City of Light" },
+    { name: "New York", image: "https://images.pexels.com/photos/2224861/pexels-photo-2224861.jpeg?auto=compress&cs=tinysrgb&h=400", desc: "The Big Apple" },
+    { name: "Tokyo", image: "https://images.pexels.com/photos/3532553/pexels-photo-3532553.jpeg?auto=compress&cs=tinysrgb&h=400", desc: "Neon & Tradition" },
+    { name: "Dubai", image: "https://images.pexels.com/photos/162031/dubai-tower-arab-khalifa-162031.jpeg?auto=compress&cs=tinysrgb&h=400", desc: "Desert Luxury" },
+    { name: "London", image: "https://images.pexels.com/photos/460672/pexels-photo-460672.jpeg?auto=compress&cs=tinysrgb&h=400", desc: "Historic Charm" },
 ];
 
 export default function LandingPage({ onSearch }: LandingPageProps) {
-    const { theme, setTheme } = useTheme();
+
     const [videoData, setVideoData] = useState<{ url: string, credit: string, source: string } | null>(null);
     const [query, setQuery] = useState("");
     const [loaded, setLoaded] = useState(false);
+    const router = useRouter();
 
     // Dynamic Recommendations State
     const [destinations, setDestinations] = useState(DESTINATIONS);
@@ -110,7 +110,7 @@ export default function LandingPage({ onSearch }: LandingPageProps) {
 
 
     return (
-        <div className="relative h-screen w-screen max-w-[100vw] overflow-x-hidden overflow-hidden bg-gray-50 dark:bg-black text-zinc-900 dark:text-white font-sans transition-colors duration-500">
+        <div className="relative h-screen w-screen max-w-[100vw] overflow-x-hidden overflow-hidden bg-black text-zinc-100 font-sans transition-colors duration-500">
             {/* Background Video (Only visible in Dark Mode or reduced opacity in Light) */}
             <div className={`absolute inset-0 transition-opacity duration-1000 ${loaded ? 'opacity-100' : 'opacity-0'}`}>
                 {videoData && (
@@ -119,17 +119,17 @@ export default function LandingPage({ onSearch }: LandingPageProps) {
                         muted
                         loop
                         playsInline
-                        className="w-full h-full object-cover opacity-20 dark:opacity-60 transition-opacity duration-500"
+                        className="w-full h-full object-cover opacity-30 transition-opacity duration-500"
                     >
                         <source src={videoData.url} type="video/mp4" />
                     </video>
                 )}
                 {/* Overlay Gradient */}
-                <div className="absolute inset-0 bg-gradient-to-b from-white/30 dark:from-black/30 via-white/10 dark:via-black/10 to-white/80 dark:to-black/80 transition-colors duration-500" />
+                <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/50 to-black/90 transition-colors duration-500" />
 
                 {/* Video Credit */}
                 {videoData && videoData.credit && (
-                    <div className="absolute bottom-4 right-4 z-20 text-[10px] text-zinc-400 dark:text-zinc-500/50 uppercase tracking-widest pointer-events-none">
+                    <div className="absolute bottom-4 right-4 z-20 text-[10px] text-zinc-400 uppercase tracking-widest pointer-events-none">
                         Video by {videoData.credit} on {videoData.source}
                     </div>
                 )}
@@ -143,45 +143,45 @@ export default function LandingPage({ onSearch }: LandingPageProps) {
             />
 
             {/* Sidebar Panel */}
-            <div className={`absolute top-0 left-0 bottom-0 z-50 w-72 bg-white/90 dark:bg-zinc-900/90 backdrop-blur-xl border-r border-gray-200 dark:border-white/10 shadow-2xl transition-transform duration-300 ease-in-out transform ${showMenu ? 'translate-x-0' : '-translate-x-full'}`}>
+            <div className={`absolute top-0 left-0 bottom-0 z-50 w-72 bg-zinc-900/90 backdrop-blur-xl border-r border-zinc-800 shadow-2xl transition-transform duration-300 ease-in-out transform ${showMenu ? 'translate-x-0' : '-translate-x-full'}`}>
                 <div className="p-6 flex flex-col h-full">
                     <div className="flex items-center justify-between mb-8">
-                        <h2 className="text-xl font-bold tracking-tight text-zinc-900 dark:text-white">Menu</h2>
-                        <button onClick={() => setShowMenu(false)} className="p-3 hover:bg-black/5 dark:hover:bg-white/10 rounded-full transition-colors text-zinc-600 dark:text-zinc-300">
+                        <h2 className="text-xl font-bold tracking-tight text-white">Menu</h2>
+                        <button onClick={() => setShowMenu(false)} className="p-3 hover:bg-white/10 rounded-full transition-colors text-zinc-400 hover:text-white">
                             <X className="w-5 h-5" />
                         </button>
                     </div>
 
                     <nav className="flex-1 space-y-2">
-                        <button className="flex items-center gap-3 w-full p-3 rounded-lg bg-black/5 dark:bg-white/10 text-zinc-900 dark:text-white font-medium">
+                        <button className="flex items-center gap-3 w-full p-3 rounded-lg bg-white/10 text-white font-medium">
                             <Home className="w-5 h-5" />
                             Home
                         </button>
-                        <Link href="/my-trips" className="flex items-center gap-3 w-full p-3 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors">
+                        <Link href="/my-trips" className="flex items-center gap-3 w-full p-3 rounded-lg hover:bg-white/5 text-zinc-400 hover:text-white transition-colors">
                             <History className="w-5 h-5" />
                             My Trips
                         </Link>
-                        <button className="flex items-center gap-3 w-full p-3 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors">
+                        <button className="flex items-center gap-3 w-full p-3 rounded-lg hover:bg-white/5 text-zinc-400 hover:text-white transition-colors">
                             <Settings className="w-5 h-5" />
                             Settings
                         </button>
-                        <Link href="/about" className="flex items-center gap-3 w-full p-3 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors">
+                        <Link href="/about" className="flex items-center gap-3 w-full p-3 rounded-lg hover:bg-white/5 text-zinc-400 hover:text-white transition-colors">
                             <Info className="w-5 h-5" />
                             About
                         </Link>
                     </nav>
 
-                    <div className="mt-6 pt-6 border-t border-gray-200 dark:border-white/10">
+                    <div className="mt-6 pt-6 border-t border-zinc-800">
 
                     </div>
 
-                    <div className="mt-auto pt-6 border-t border-gray-200 dark:border-white/5">
+                    <div className="mt-auto pt-6 border-t border-zinc-800">
                         <div className="flex items-center gap-4 mb-4">
                             <a
                                 href="https://www.instagram.com/weekendtravellers.official"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="text-zinc-600 dark:text-zinc-400 hover:text-pink-600 dark:hover:text-pink-500 transition-colors"
+                                className="text-zinc-400 hover:text-pink-500 transition-colors"
                             >
                                 <Instagram className="w-5 h-5" />
                             </a>
@@ -189,7 +189,7 @@ export default function LandingPage({ onSearch }: LandingPageProps) {
                                 href="https://www.youtube.com/@weekendtravellers.official"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="text-zinc-600 dark:text-zinc-400 hover:text-red-600 dark:hover:text-red-500 transition-colors"
+                                className="text-zinc-400 hover:text-red-500 transition-colors"
                             >
                                 <Youtube className="w-5 h-5" />
                             </a>
@@ -202,48 +202,45 @@ export default function LandingPage({ onSearch }: LandingPageProps) {
             {/* Top Left Menu */}
             <button
                 onClick={() => setShowMenu(true)}
-                className={`absolute top-6 left-6 z-30 p-3 bg-white/20 dark:bg-black/20 hover:bg-white/40 dark:hover:bg-black/40 backdrop-blur-md border border-white/20 dark:border-white/10 rounded-full text-zinc-900 dark:text-white transition-all hover:scale-105 ${showMenu ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
+                className={`absolute top-6 left-6 z-30 p-3 bg-black/20 hover:bg-black/40 backdrop-blur-md border border-white/10 rounded-full text-white transition-all hover:scale-105 ${showMenu ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
             >
                 <Menu className="w-6 h-6" />
             </button>
 
-            {/* Top Right Theme Toggle */}
-            <div className={`absolute top-6 right-6 z-30 ${showMenu ? 'opacity-0 pointer-events-none' : 'opacity-100'} transition-opacity duration-300`}>
-                <ThemeToggle />
-            </div>
+            {/* Top Right Theme Toggle Removed */}
 
             {/* Content Centered */}
             <div className="relative z-10 flex flex-col items-center justify-center h-full px-4 text-center">
 
                 {/* Logo */}
                 <div className="mb-6">
-                    <Logo width={120} height={120} className="drop-shadow-2xl" />
+                    <Logo width={120} height={120} className="drop-shadow-2xl brightness-110" />
                 </div>
 
                 {/* Hero Text */}
-                <h1 className="text-3xl sm:text-5xl md:text-7xl font-bold tracking-tight mb-2 drop-shadow-2xl bg-clip-text text-transparent bg-gradient-to-b from-zinc-800 to-zinc-500 dark:from-white dark:to-white/70 px-2 transition-colors duration-500">
-                    Weekend Trip Planner India
+                <h1 className="text-3xl sm:text-5xl md:text-7xl font-bold tracking-tight mb-2 drop-shadow-2xl text-white px-2 transition-colors duration-500">
+                    Global Weekend Trip Planner
                 </h1>
-                <p className="text-base sm:text-lg md:text-xl text-zinc-600 dark:text-zinc-100 mb-6 md:mb-12 font-light tracking-wide drop-shadow-md px-4 transition-colors duration-500">
-                    Discover India&apos;s best weekend getaways with AI.
+                <p className="text-base sm:text-lg md:text-xl text-zinc-300 mb-6 md:mb-12 font-light tracking-wide drop-shadow-md px-4 transition-colors duration-500">
+                    Discover the world&apos;s best weekend getaways with AI.
                 </p>
 
                 {/* Search Bar */}
                 <form onSubmit={handleSearch} className="w-full max-w-2xl px-4 md:px-0 mb-12 md:mb-16 group relative">
                     <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 to-indigo-600 rounded-full opacity-30 group-hover:opacity-60 transition duration-500 blur-lg"></div>
-                    <div className="relative flex items-center bg-white/50 dark:bg-white/10 backdrop-blur-xl border border-gray-200 dark:border-white/20 rounded-full p-2 transition-all group-focus-within:bg-white/80 dark:group-focus-within:bg-black/40 group-focus-within:border-purple-300 dark:group-focus-within:border-white/40 shadow-2xl">
-                        <Search className="w-6 h-6 text-zinc-400 dark:text-zinc-300 ml-4 flex-shrink-0" />
+                    <div className="relative flex items-center bg-zinc-900/80 backdrop-blur-xl border border-zinc-700/50 rounded-full p-2 transition-all group-focus-within:bg-zinc-900 group-focus-within:border-purple-500/50 shadow-2xl">
+                        <Search className="w-6 h-6 text-zinc-400 ml-4 flex-shrink-0" />
                         <input
                             type="text"
                             value={query}
                             onChange={(e) => setQuery(e.target.value)}
                             placeholder="Where do you want to start?"
                             autoComplete="off"
-                            className="flex-1 min-w-0 bg-transparent border-none text-zinc-900 dark:text-white text-base md:text-lg px-4 py-3 focus:ring-0 focus:outline-none placeholder-zinc-500 dark:placeholder-zinc-400 font-light"
+                            className="flex-1 min-w-0 bg-transparent border-none text-white text-base md:text-lg px-4 py-3 focus:ring-0 focus:outline-none placeholder-zinc-500 font-light"
                         />
                         <button
                             type="submit"
-                            className="bg-zinc-900 dark:bg-white text-white dark:text-black p-3 rounded-full hover:bg-zinc-700 dark:hover:bg-zinc-200 transition-colors shadow-lg flex-shrink-0"
+                            className="bg-white text-black p-3 rounded-full hover:bg-zinc-200 transition-colors shadow-lg flex-shrink-0"
                         >
                             <ArrowRight className="w-5 h-5" />
                         </button>
@@ -253,24 +250,24 @@ export default function LandingPage({ onSearch }: LandingPageProps) {
                 {/* Top Destinations Cards - HIDDEN ON MOBILE */}
                 <div className="hidden md:block w-full max-w-5xl px-4">
                     {loadingRecs ? (
-                        <div className="text-zinc-500 dark:text-zinc-400 animate-pulse">Finding hidden gems near you...</div>
+                        <div className="text-zinc-500 animate-pulse">Finding hidden gems near you...</div>
                     ) : (
                         <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
                             {destinations.map((dest) => (
                                 <div
                                     key={dest.name}
-                                    onClick={() => onSearch(dest.name)}
-                                    className="group relative h-48 md:h-64 rounded-2xl overflow-hidden cursor-pointer border border-gray-200 dark:border-white/10 hover:border-purple-400 dark:hover:border-white/40 transition-all shadow-lg hover:-translate-y-1"
+                                    onClick={() => router.push(`/trip?id=new&query=${encodeURIComponent(dest.name)}`)}
+                                    className="group relative h-48 md:h-64 rounded-2xl overflow-hidden cursor-pointer border border-zinc-800 hover:border-purple-500/50 transition-all shadow-lg hover:-translate-y-1"
                                 >
                                     <img
                                         src={dest.image}
                                         alt={dest.name}
-                                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-90 dark:opacity-80 group-hover:opacity-100"
+                                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-70 group-hover:opacity-100"
                                     />
-                                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />
+                                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent" />
                                     <div className="absolute bottom-0 left-0 p-4 text-left">
                                         <h3 className="text-xl font-bold text-white">{dest.name}</h3>
-                                        <p className="text-sm text-gray-300 line-clamp-2 italic">&quot;{dest.desc}&quot;</p>
+                                        <p className="text-sm text-gray-400 line-clamp-2 italic">&quot;{dest.desc}&quot;</p>
                                     </div>
                                 </div>
                             ))}
@@ -285,7 +282,7 @@ export default function LandingPage({ onSearch }: LandingPageProps) {
                     href="https://www.instagram.com/weekendtravellers.official"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="p-2 bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/10 rounded-full text-zinc-600 dark:text-white/70 hover:text-pink-600 dark:hover:text-pink-400 transition-all hover:scale-110 shadow-lg"
+                    className="p-2 bg-black/20 hover:bg-black/40 backdrop-blur-md border border-white/10 rounded-full text-zinc-400 hover:text-pink-500 transition-all hover:scale-110 shadow-lg"
                     aria-label="Instagram"
                 >
                     <Instagram className="w-5 h-5" />
@@ -294,7 +291,7 @@ export default function LandingPage({ onSearch }: LandingPageProps) {
                     href="https://www.youtube.com/@weekendtravellers.official"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="p-2 bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/10 rounded-full text-zinc-600 dark:text-white/70 hover:text-red-600 dark:hover:text-red-400 transition-all hover:scale-110 shadow-lg"
+                    className="p-2 bg-black/20 hover:bg-black/40 backdrop-blur-md border border-white/10 rounded-full text-zinc-400 hover:text-red-500 transition-all hover:scale-110 shadow-lg"
                     aria-label="YouTube"
                 >
                     <Youtube className="w-5 h-5" />
