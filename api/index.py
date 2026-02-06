@@ -80,7 +80,8 @@ def health_check():
     return {
         "status": "ok", 
         "openai_check": "OPENAI_API_KEY" in os.environ,
-        "pexels_check": "PEXELS_API_KEY" in os.environ
+        "pexels_check": "PEXELS_API_KEY" in os.environ,
+        "pixabay_check": "PIXABAY_API_KEY" in os.environ
     }
 
 @app.get("/")
