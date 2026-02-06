@@ -88,3 +88,6 @@ def read_root():
     return {"message": "Weekend Traveller API"}
 
 
+
+from mangum import Mangum
+handler = Mangum(app)
